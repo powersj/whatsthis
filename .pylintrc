@@ -1,0 +1,14 @@
+[MESSAGES CONTROL]
+
+# R0902(too-many-instance-attributes)
+# R0903(too-few-public-methods)
+disable=R0902,R0903,
+
+
+[REPORTS]
+
+# Set the output format. Available formats are text, parseable, colorized, msvs
+output-format=parseable
+
+# Just the errors please, no full report
+reports=no

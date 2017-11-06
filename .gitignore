@@ -1,0 +1,12 @@
+__pychache__
+
+# Testing
+.tox
+.coverage
+.noseids
+cover/
+
+
+# Build
+*.egg-info
+build
