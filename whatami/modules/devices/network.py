@@ -28,10 +28,15 @@ class Network(base.Module):
         Walks those devices, with the exception of the 'lo' device.
         """
         self.log.debug('Discovering network...')
-        for device in os.listdir('/sys/class/net/'):
+        for device in self._list_devices():
             if 'lo' in device:
                 continue
             self.adapters.append(NetworkDevice(device))
+
+    @staticmethod
+    def _list_devices():
+        """List all network devices."""
+        return os.listdir('/sys/class/net/')
 
 
 class NetworkDevice(object):
@@ -54,12 +59,23 @@ class NetworkDevice(object):
 
     def discovery(self):
         """Go through the device files in /sys/class/net/device."""
-        self.mac = util.readfile('%s/address' % self.sys_path)
-        self.mtu = util.readfile('%s/mtu' % self.sys_path)
+        self.mac = self._get_mac()
+        self.mtu = self._get_mtu()
+        self.type = self._get_type()
 
+    def _get_mac(self):
+        """Return MAC Address of interface."""
+        return util.readfile('%s/address' % self.sys_path)
+
+    def _get_mtu(self):
+        """Return MTU of interface."""
+        return util.readfile('%s/mtu' % self.sys_path)
+
+    def _get_type(self):
+        """Return type of interface."""
         if os.path.exists('%s/device' % self.sys_path):
-            self.type = 'physical'
+            return 'physical'
         elif os.path.exists('%s/bridge' % self.sys_path):
-            self.type = 'bridge'
-        else:
-            self.type = 'unknown'
+            return 'bridge'
+
+        return 'unknown'

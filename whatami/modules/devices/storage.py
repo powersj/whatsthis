@@ -32,11 +32,21 @@ class Storage(base.Module):
         """
         self.log.debug('Discovering storage...')
 
-        virtual_devices = os.listdir('/sys/devices/virtual/block')
-        for device in os.listdir('/sys/block'):
+        virtual_devices = self._list_virtual_devices()
+        for device in self._list_devices():
             if device in virtual_devices:
                 continue
             self.devices.append(BlockDevice(device))
+
+    @staticmethod
+    def _list_virtual_devices():
+        """List all devices."""
+        return os.listdir('/sys/devices/virtual/block')
+
+    @staticmethod
+    def _list_devices():
+        """List all devices."""
+        return os.listdir('/sys/block')
 
 
 class BlockDevice(object):
@@ -60,26 +70,10 @@ class BlockDevice(object):
         of the devices real block size.
         """
         sectors = util.readfile('%s/size' % self.sys_path)
-        kilobytes = int(sectors) / 2
+
+        if not sectors:
+            kilobytes = 0
+        else:
+            kilobytes = int(sectors) / 2
+
         return util.kilobytes2human(kilobytes)
-
-
-class Partition(object):
-    """Partition class."""
-
-    def __init__(self, name):
-        """Initialization."""
-        super(Partition, self).__init__()
-
-        self.name = name
-        self.size = None
-        self.filesystem = None
-        self.flags = None
-
-    def __str__(self):
-        """Return each partition with size."""
-        return '[%s] %s' % (self.name, self.size)
-
-    def discovery(self):
-        """TODO."""
-        pass
