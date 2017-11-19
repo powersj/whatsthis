@@ -1,6 +1,6 @@
 [report]
 show_missing = True
-skip_covered = True
+# skip_covered = True
 
 [run]
 omit = whatami/discovery.py
