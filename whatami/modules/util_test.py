@@ -8,12 +8,14 @@ from . import util
 class TestCaseUtil(TestCase):
     """Util test case."""
 
-    def test_readfile_nonexistent(self):
+    @staticmethod
+    def test_readfile_nonexistent():
         """Test nonexistent file."""
-        output = util.readfile('/tmp/fakefile')
-        assert '' == output
+        result = util.readfile('/tmp/fakefile')
+        assert result == ''
 
-    def test_readfile(self):
+    @staticmethod
+    def test_readfile():
         """Test reading a file."""
         data = 'test data'
         temp_path = util.write_tempfile(data)
@@ -22,49 +24,58 @@ class TestCaseUtil(TestCase):
 
         assert data == output
 
-    def test_kilobytes2human_none(self):
+    @staticmethod
+    def test_kilobytes2human_none():
         """Test empty or zero value."""
         result = util.kilobytes2human(0)
-        assert '0KB' == result
+        assert result == '0KB'
 
-    def test_kilobytes2human_string_invalid(self):
+    @staticmethod
+    def test_kilobytes2human_alphastr():
         """Test string with alphabet charchters."""
         result = util.kilobytes2human('34000KB')
         print(result)
-        assert '34.0MB' == result
+        assert result == '34.0MB'
 
-    def test_kilobytes2human_string(self):
+    @staticmethod
+    def test_kilobytes2human_string():
         """Test string, rather than int."""
         result = util.kilobytes2human('10000')
-        assert '10.0MB' == result
+        assert result == '10.0MB'
 
-    def test_kilobytes2human_small(self):
+    @staticmethod
+    def test_kilobytes2human_small():
         """Test value less than 1."""
         result = util.kilobytes2human(0.1)
         print(result)
-        assert '<1KB' == result
+        assert result == '<1KB'
 
-    def test_kilobytes2human_kb(self):
+    @staticmethod
+    def test_kilobytes2human_kb():
         """Test single kilobyte."""
         result = util.kilobytes2human(1)
-        assert '1.0KB' == result
+        assert result == '1.0KB'
 
-    def test_kilobytes2human_mb(self):
+    @staticmethod
+    def test_kilobytes2human_mb():
         """Test single megabyte."""
         result = util.kilobytes2human(1000)
-        assert '1.0MB' == result
+        assert result == '1.0MB'
 
-    def test_kilobytes2human_gb(self):
+    @staticmethod
+    def test_kilobytes2human_gb():
         """Test single gigabyte."""
         result = util.kilobytes2human(1000000)
-        assert '1.0GB' == result
+        assert result == '1.0GB'
 
-    def test_kilobytes2human_tb(self):
+    @staticmethod
+    def test_kilobytes2human_tb():
         """Test single terabyte."""
         result = util.kilobytes2human(1000000000)
-        assert '1.0TB' == result
+        assert result == '1.0TB'
 
-    def test_kilobytes2human_pb(self):
+    @staticmethod
+    def test_kilobytes2human_pb():
         """Test single petabyte."""
         result = util.kilobytes2human(1000000000000)
-        assert '1.0PB' == result
+        assert result == '1.0PB'
