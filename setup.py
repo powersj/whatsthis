@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""TODO."""
+"""Python packaging configuration."""
 import os
 from setuptools import setup
 
