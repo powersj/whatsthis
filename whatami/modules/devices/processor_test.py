@@ -29,12 +29,13 @@ class TestCaseProcessor(TestCase):
         processor   : 0
         processor   : 1
         processor   : 2
-        processor   : 3
         """
         self.processor.discovery()
 
-        test_count = 4
+        test_count = 3
         test_model = 'Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz'
+        print(self.processor)
         assert self.processor.cpus == test_count
         assert self.processor.model == test_model
-        assert str(self.processor) == '%sx %s' % (test_count, test_model)
+        self.assertIn('Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz',
+                      str(self.processor))

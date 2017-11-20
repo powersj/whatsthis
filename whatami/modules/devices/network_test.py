@@ -17,7 +17,6 @@ class TestCaseNetwork(TestCase):
         """Test when empty output from meminfo."""
         mock_list_devices.return_value = []
         self.network.discovery()
-
         assert self.network.adapters == []
 
     @patch('whatami.modules.devices.network.Network._list_devices')
@@ -25,7 +24,6 @@ class TestCaseNetwork(TestCase):
         """Test when empty output from meminfo."""
         mock_list_devices.return_value = ['lo']
         self.network.discovery()
-
         assert self.network.adapters == []
 
     @patch('os.listdir')
@@ -34,13 +32,13 @@ class TestCaseNetwork(TestCase):
         mock_listdir.return_value = []
         self.network.discovery()
         assert self.network.adapters == []
-        assert str(self.network) == ''
+        assert str(self.network) == 'No network adapters found'
 
     def test_adapters(self):
         """Test adapters."""
         self.network.discovery()
         assert self.network.adapters
-        assert str(self.network) != ''
+        assert str(self.network) != 'No network adapters found'
 
 
 class TestCaseNetworkDevice(TestCase):
@@ -60,7 +58,8 @@ class TestCaseNetworkDevice(TestCase):
     def test_networkdevice_empty(self):
         """Testing emtpy device."""
         assert self.device.name == ''
-        assert str(self.device) == '[] None mtu None None'
+        print(self.device)
+        assert str(self.device) == ' None None None'
 
     @patch('os.path.exists')
     def test_get_type_physical(self, mock_path):

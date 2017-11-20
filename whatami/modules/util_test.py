@@ -35,13 +35,13 @@ class TestCaseUtil(TestCase):
         """Test string with alphabet charchters."""
         result = util.kilobytes2human('34000KB')
         print(result)
-        assert result == '34.0MB'
+        assert result == '34MB'
 
     @staticmethod
     def test_kilobytes2human_string():
         """Test string, rather than int."""
         result = util.kilobytes2human('10000')
-        assert result == '10.0MB'
+        assert result == '10MB'
 
     @staticmethod
     def test_kilobytes2human_small():
@@ -54,28 +54,28 @@ class TestCaseUtil(TestCase):
     def test_kilobytes2human_kb():
         """Test single kilobyte."""
         result = util.kilobytes2human(1)
-        assert result == '1.0KB'
+        assert result == '1KB'
 
     @staticmethod
     def test_kilobytes2human_mb():
         """Test single megabyte."""
         result = util.kilobytes2human(1000)
-        assert result == '1.0MB'
+        assert result == '1MB'
 
     @staticmethod
     def test_kilobytes2human_gb():
         """Test single gigabyte."""
         result = util.kilobytes2human(1000000)
-        assert result == '1.0GB'
+        assert result == '1GB'
 
     @staticmethod
     def test_kilobytes2human_tb():
         """Test single terabyte."""
         result = util.kilobytes2human(1000000000)
-        assert result == '1.0TB'
+        assert result == '1TB'
 
     @staticmethod
     def test_kilobytes2human_pb():
         """Test single petabyte."""
         result = util.kilobytes2human(1000000000000)
-        assert result == '1.0PB'
+        assert result == '1PB'

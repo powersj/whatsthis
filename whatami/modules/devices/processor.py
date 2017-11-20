@@ -1,4 +1,6 @@
 """Processor module."""
+from tabulate import tabulate
+
 from .. import base
 from .. import util
 
@@ -20,7 +22,10 @@ class Processor(base.Module):
 
     def __str__(self):
         """Return string with the nubmer and type of processors."""
-        return '%sx %s' % (self.cpus, self.model)
+        table = [
+            [self.cpus, self.model]
+        ]
+        return tabulate(table)
 
     def discovery(self):
         """Utilize information from /proc/cpuinfo."""

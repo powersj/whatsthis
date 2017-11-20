@@ -5,6 +5,8 @@ not virtual devices.
 """
 import os
 
+from tabulate import tabulate
+
 from .. import base
 from .. import util
 
@@ -20,10 +22,13 @@ class Storage(base.Module):
 
     def __str__(self):
         """Return each storage device found."""
-        msg = ''
+        if not self.devices:
+            return 'No storage devices found'
+
+        table = []
         for device in self.devices:
-            msg = '%s\n%s' % (msg, device)
-        return msg
+            table.append(str(device).split(' '))
+        return tabulate(table)
 
     def discovery(self):
         """Utilize inforamtion in /sys/block.
@@ -61,7 +66,7 @@ class BlockDevice(object):
 
     def __str__(self):
         """Return each block device and size."""
-        return '[%s] %s' % (self.name, self.size)
+        return '%s %s' % (self.name, self.size)
 
     def _size_from_sectors(self):
         """Read size from /sys/block and convert to human size.

@@ -16,7 +16,7 @@ class TestCaseStorage(TestCase):
         """Test storage."""
         self.storage.discovery()
         assert self.storage.devices
-        assert str(self.storage) != ''
+        assert str(self.storage) != 'No storage devices found'
 
     @patch('whatami.modules.devices.storage.Storage._list_devices')
     def test_no_storage(self, mock_devices):
@@ -24,7 +24,7 @@ class TestCaseStorage(TestCase):
         mock_devices.return_value = []
         self.storage.discovery()
         assert not self.storage.devices
-        assert str(self.storage) == ''
+        assert str(self.storage) == 'No storage devices found'
 
 
 class TestCaseBlockDevice(TestCase):
@@ -39,5 +39,4 @@ class TestCaseBlockDevice(TestCase):
         """Test converting size from sectors."""
         mock_readfile.return_value = '1953525168'
         size = self.device._size_from_sectors()  # pylint: disable=W0212
-        print(size)
-        assert size == "976.76GB"
+        assert size == "977GB"

@@ -12,7 +12,7 @@ def firstmatch(string, regex, return_int=False):
         return int(matches[0]) if return_int else matches[0]
     except IndexError:
         if return_int:
-            return -1
+            return 0
         return ''
 
 
@@ -32,7 +32,7 @@ def kilobytes2human(kilobytes):
     magnitudes = ['KB', 'MB', 'GB', 'TB', 'PB']
     order = int(math.floor(math.log(kilobytes, 1000)))
     power = math.pow(1000, order)
-    size = round(kilobytes / power, 2)
+    size = round(kilobytes / power)
 
     return '%s%s' % (size, magnitudes[order])
 

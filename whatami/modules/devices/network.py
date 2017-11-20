@@ -2,6 +2,8 @@
 import logging
 import os
 
+from tabulate import tabulate
+
 from .. import base
 from .. import util
 
@@ -17,10 +19,13 @@ class Network(base.Module):
 
     def __str__(self):
         """Return each adapter's information."""
-        string = ''
+        if not self.adapters:
+            return 'No network adapters found'
+
+        table = []
         for adapter in self.adapters:
-            string = '%s\n%s' % (string, adapter)
-        return string
+            table.append(str(adapter).split(' '))
+        return tabulate(table)
 
     def discovery(self):
         """Utilize the information in /sys/class/net.
@@ -54,8 +59,7 @@ class NetworkDevice(object):
 
     def __str__(self):
         """Return basic information about a network deivce."""
-        return '[%s] %s mtu %s %s' % (self.name, self.type, self.mtu,
-                                      self.mac)
+        return '%s %s %s %s' % (self.name, self.type, self.mtu, self.mac)
 
     def discovery(self):
         """Go through the device files in /sys/class/net/device."""

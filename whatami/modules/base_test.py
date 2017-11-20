@@ -13,8 +13,3 @@ class TestCaseModule(TestCase):
         """Test string output."""
         assert str(self.module) == ''
         assert repr(self.module) == ''
-
-    def test_discovery(self):
-        """Test discovery method."""
-        with self.assertRaises(NotImplementedError):
-            self.module.discovery()

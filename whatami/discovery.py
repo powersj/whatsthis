@@ -21,7 +21,10 @@ def launch(debug=False):
     for module in Module.__subclasses__():
         log.info('Loading module: %s', module.__name__)
         modules[module.__name__] = module()
-        modules[module.__name__].discovery()
+        try:
+            modules[module.__name__].discovery()
+        except AttributeError:
+            pass
 
     for _, module in modules.items():
-        log.info(module)
+        print(module)

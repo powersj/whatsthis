@@ -1,4 +1,6 @@
 """Memory module."""
+from tabulate import tabulate
+
 from .. import base
 from .. import util
 
@@ -9,23 +11,27 @@ class Memory(base.Module):
     def __init__(self):
         """Initialization."""
         super(Memory, self).__init__()
-
-        self.system_total = None
-        self.swap_total = None
+        self.log.debug('Discovering memory...')
+        self.system_total = self._find_memory_total()
+        self.swap_total = self._find_swap_total()
 
     def __str__(self):
         """Return system memory count."""
-        return '%s system memory' % (self.system_total)
+        table = []
+        table.append(['System', self.system_total])
+        table.append(['Swap', self.swap_total])
+        return tabulate(table)
 
-    def discovery(self):
-        """Utilize the information in /proc/meminfo.
-
-        For now capture the system and swap totals.
-        """
-        self.log.debug('Discovering memory...')
-
+    @staticmethod
+    def _find_memory_total():
+        """Report total memory value."""
         meminfo = util.readfile('/proc/meminfo')
-        self.system_total = util.firstmatch(r'MemTotal:\s*(.*) kB',
-                                            meminfo, True)
-        self.swap_total = util.firstmatch(r'SwapTotal:\s*(.*) kB',
-                                          meminfo, True)
+        memory = util.firstmatch(r'MemTotal:\s*(.*) kB', meminfo, True)
+        return util.kilobytes2human(memory)
+
+    @staticmethod
+    def _find_swap_total():
+        """Report total swap value."""
+        meminfo = util.readfile('/proc/meminfo')
+        swap = util.firstmatch(r'SwapTotal:\s*(.*) kB', meminfo, True)
+        return util.kilobytes2human(swap)

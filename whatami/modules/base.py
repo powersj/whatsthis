@@ -23,10 +23,6 @@ class Module(object):
         """By default return whatever __str__ has instead of useless object."""
         return self.__str__()
 
-    def discovery(self):
-        """Require this function or raise an exception."""
-        raise NotImplementedError
-
 
 class TestCase(unittest.TestCase):
     """TestCase base class."""
