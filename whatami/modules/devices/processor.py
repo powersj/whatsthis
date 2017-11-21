@@ -32,3 +32,7 @@ class Processor(base.Module):
         """Report total swap value."""
         cpuinfo = util.readfile('/proc/cpuinfo')
         return util.firstmatch(r'model name.*\s: (.+?)\n', cpuinfo)
+
+    def to_json(self):
+        """Return dictionary like item for JSON output."""
+        raise NotImplementedError

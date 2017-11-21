@@ -34,3 +34,7 @@ class Memory(base.Module):
         meminfo = util.readfile('/proc/meminfo')
         swap = util.firstmatch(r'SwapTotal:\s*(.*) kB', meminfo, True)
         return util.kilobytes2human(swap)
+
+    def to_json(self):
+        """Return dictionary like item for JSON output."""
+        raise NotImplementedError

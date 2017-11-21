@@ -41,6 +41,10 @@ class Network(base.Module):
         """List all network devices."""
         return os.listdir('/sys/class/net/')
 
+    def to_json(self):
+        """Return dictionary like item for JSON output."""
+        raise NotImplementedError
+
 
 class NetworkDevice(object):
     """NetworkDevice class."""

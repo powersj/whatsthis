@@ -53,6 +53,10 @@ class Storage(base.Module):
         """List all devices."""
         return os.listdir('/sys/block')
 
+    def to_json(self):
+        """Return dictionary like item for JSON output."""
+        raise NotImplementedError
+
 
 class BlockDevice(object):
     """Disk Storage class."""
