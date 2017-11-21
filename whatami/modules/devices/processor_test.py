@@ -13,8 +13,10 @@ class TestCaseProcessor(TestCase):
         """Test when empty output from cpuinfo."""
         mock_readfile.return_value = ''
         processor = Processor()
+        expected_json = {'processor': {'qty': 0, 'model': ''}}
         self.assertEqual(processor.cpus, 0)
         self.assertEqual(processor.model, '')
+        self.assertEqual(processor.to_json(), expected_json)
 
     @patch('whatami.modules.util.readfile')
     def test_positive(self, mock_readfile):

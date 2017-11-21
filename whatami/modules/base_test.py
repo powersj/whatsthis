@@ -11,5 +11,10 @@ class TestCaseModule(TestCase):
 
     def test_string(self):
         """Test string output."""
-        assert str(self.module) == ''
-        assert repr(self.module) == ''
+        self.assertEqual(str(self.module), '')
+        self.assertEqual(repr(self.module), '')
+
+    def test_json(self):
+        """Test assert NotImplementedError."""
+        with self.assertRaises(NotImplementedError):
+            self.module.to_json()

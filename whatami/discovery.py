@@ -1,4 +1,5 @@
 """Launch the discovery of the system."""
+import json
 import logging
 import sys
 
@@ -12,7 +13,7 @@ def setup_logging(debug=False):
     logging.basicConfig(stream=sys.stdout, format=log_format, level=log_level)
 
 
-def launch(debug=False, json=False):
+def launch(debug=False, json_output=False):
     """Discovery and execution of all modules."""
     setup_logging(debug)
     log = logging.getLogger('whatami')
@@ -22,8 +23,9 @@ def launch(debug=False, json=False):
         log.debug('Loading module: %s', module.__name__)
         modules[module.__name__] = module()
 
-    for _, module in modules.items():
-        if json:
-            print(module.to_json())
-        else:
+    if json_output:
+        module_json = [module.to_json() for module in modules.values()]
+        print(json.dumps(module_json, indent=2))
+    else:
+        for _, module in modules.items():
             print(module)

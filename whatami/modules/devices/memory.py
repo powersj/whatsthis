@@ -37,4 +37,9 @@ class Memory(base.Module):
 
     def to_json(self):
         """Return dictionary like item for JSON output."""
-        raise NotImplementedError
+        return {
+            "memory": {
+                "system": self.system_total,
+                "swap": self.swap_total
+            }
+        }

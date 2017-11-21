@@ -8,33 +8,35 @@ from ..base import TestCase
 class TestCaseNetwork(TestCase):
     """Network test case."""
 
-    @patch('whatami.modules.devices.network.Network._get_adapters')
+    @patch('whatami.modules.devices.network.Network._get_devices')
     def test_empty_network(self, mock_list_devices):
-        """Test when no adapters."""
+        """Test when no devices."""
         mock_list_devices.return_value = []
         network = Network()
-        self.assertEqual(network.adapters, [])
+        self.assertEqual(network.devices, [])
 
     @patch('whatami.modules.devices.network.Network._list_devices')
     def test_local_network(self, mock_list_devices):
-        """Test when only local adapter."""
+        """Test when only local device."""
         mock_list_devices.return_value = ['lo']
         network = Network()
-        self.assertEqual(network.adapters, [])
+        self.assertEqual(network.devices, [])
 
     @patch('os.listdir')
     def test_list_devices_empty(self, mock_listdir):
         """Test listing devices."""
         mock_listdir.return_value = []
         network = Network()
-        self.assertEqual(network.adapters, [])
-        self.assertIn('No network adapters found', str(network))
+        expected_json = {'network': {}}
+        self.assertEqual(network.devices, [])
+        self.assertIn('No network devices found', str(network))
+        self.assertEqual(network.to_json(), expected_json)
 
-    def test_adapters(self):
-        """Test adapters."""
+    def test_devices(self):
+        """Test devices."""
         network = Network()
-        self.assertIsNotNone(network.adapters)
-        self.assertNotIn('No network adapters found', str(network))
+        self.assertIsNotNone(network.devices)
+        self.assertNotIn('No network devices found', str(network))
 
 
 class TestCaseNetworkDevice(TestCase):

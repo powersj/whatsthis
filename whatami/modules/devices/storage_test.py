@@ -19,8 +19,10 @@ class TestCaseStorage(TestCase):
         """Test no storage."""
         mock_devices.return_value = []
         storage = Storage()
+        expected_json = {'storage': {}}
         self.assertEqual(storage.devices, [])
         self.assertIn(str(storage), 'No storage devices found')
+        self.assertEqual(storage.to_json(), expected_json)
 
 
 class TestCaseBlockDevice(TestCase):

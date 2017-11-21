@@ -1,5 +1,4 @@
 """Network module."""
-import logging
 import os
 
 from tabulate import tabulate
@@ -14,27 +13,27 @@ class Network(base.Module):
     def __init__(self):
         """Initialization."""
         super(Network, self).__init__()
-        self.adapters = self._get_adapters()
+        self.devices = self._get_devices()
 
     def __str__(self):
-        """Return each adapter's information."""
-        if not self.adapters:
-            return 'No network adapters found'
+        """Return each device's information."""
+        if not self.devices:
+            return 'No network devices found'
 
         table = []
-        for adapter in self.adapters:
+        for adapter in self.devices:
             table.append(str(adapter).split(' '))
         return tabulate(table)
 
-    def _get_adapters(self):
-        """Get all adapters from /sys/class/net."""
-        adapters = []
+    def _get_devices(self):
+        """Get all devices from /sys/class/net."""
+        devices = []
         for device in self._list_devices():
             if 'lo' in device:
                 continue
-            adapters.append(NetworkDevice(device))
+            devices.append(NetworkDevice(device))
 
-        return adapters
+        return devices
 
     @staticmethod
     def _list_devices():
@@ -43,7 +42,13 @@ class Network(base.Module):
 
     def to_json(self):
         """Return dictionary like item for JSON output."""
-        raise NotImplementedError
+        devices = {}
+        for device in self.devices:
+            devices[device.name] = device.to_json()
+
+        return {
+            "network": devices
+        }
 
 
 class NetworkDevice(object):
@@ -52,7 +57,6 @@ class NetworkDevice(object):
     def __init__(self, device):
         """Initialization."""
         super(NetworkDevice, self).__init__()
-        self.log = logging.getLogger(name=__name__)
         self.name = device
         self.sys_path = '/sys/class/net/%s' % device
         self.mac = self._get_mac()
@@ -79,3 +83,11 @@ class NetworkDevice(object):
             return 'bridge'
 
         return 'unknown'
+
+    def to_json(self):
+        """Return dictionary like item for JSON output."""
+        return {
+            "mac": self.mac,
+            "mtu": self.mtu,
+            "type": self.type
+        }

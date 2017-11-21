@@ -35,4 +35,9 @@ class Processor(base.Module):
 
     def to_json(self):
         """Return dictionary like item for JSON output."""
-        raise NotImplementedError
+        return {
+            "processor": {
+                "qty": self.cpus,
+                "model": self.model
+            }
+        }

@@ -55,7 +55,13 @@ class Storage(base.Module):
 
     def to_json(self):
         """Return dictionary like item for JSON output."""
-        raise NotImplementedError
+        devices = {}
+        for device in self.devices:
+            devices[device.name] = device.to_json()
+
+        return {
+            "storage": devices
+        }
 
 
 class BlockDevice(object):
@@ -86,3 +92,9 @@ class BlockDevice(object):
             kilobytes = int(sectors) / 2
 
         return util.kilobytes2human(kilobytes)
+
+    def to_json(self):
+        """Return dictionary like item for JSON output."""
+        return {
+            "size": self.size
+        }

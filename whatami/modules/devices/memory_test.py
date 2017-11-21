@@ -13,9 +13,12 @@ class TestCaseMemory(TestCase):
         """Test when empty output from meminfo."""
         mock_readfile.return_value = ''
         memory = Memory()
+        expected_json = {'memory': {'system': '0KB', 'swap': '0KB'}}
+
         self.assertEqual(memory.system_total, '0KB')
         self.assertEqual(memory.swap_total, '0KB')
         self.assertIn('0KB', str(memory))
+        self.assertEqual(memory.to_json(), expected_json)
 
     @patch('whatami.modules.util.readfile')
     def test_positive(self, mock_readfile):
