@@ -11,14 +11,9 @@ class Processor(base.Module):
     def __init__(self):
         """Initialization."""
         super(Processor, self).__init__()
-
-        self.cpus = None
-        self.model = None
-        self.threads_per_core = None
-        self.cores_per_socket = None
-        self.sockets = None
-        self.vendor = None
-        self.flags = None
+        self.log.debug('Discovering processors...')
+        self.cpus = self._get_cpu_total()
+        self.model = self._get_model()
 
     def __str__(self):
         """Return string with the nubmer and type of processors."""
@@ -27,10 +22,14 @@ class Processor(base.Module):
         ]
         return tabulate(table)
 
-    def discovery(self):
-        """Utilize information from /proc/cpuinfo."""
-        self.log.debug('Discovering processors...')
-
+    @staticmethod
+    def _get_cpu_total():
+        """Report total number of processors."""
         cpuinfo = util.readfile('/proc/cpuinfo')
-        self.cpus = cpuinfo.count('processor')
-        self.model = util.firstmatch(r'model name.*\s: (.+?)\n', cpuinfo)
+        return cpuinfo.count('processor')
+
+    @staticmethod
+    def _get_model():
+        """Report total swap value."""
+        cpuinfo = util.readfile('/proc/cpuinfo')
+        return util.firstmatch(r'model name.*\s: (.+?)\n', cpuinfo)

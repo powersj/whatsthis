@@ -12,8 +12,8 @@ class Memory(base.Module):
         """Initialization."""
         super(Memory, self).__init__()
         self.log.debug('Discovering memory...')
-        self.system_total = self._find_memory_total()
-        self.swap_total = self._find_swap_total()
+        self.system_total = self._get_memory_total()
+        self.swap_total = self._get_swap_total()
 
     def __str__(self):
         """Return system memory count."""
@@ -23,14 +23,14 @@ class Memory(base.Module):
         return tabulate(table)
 
     @staticmethod
-    def _find_memory_total():
+    def _get_memory_total():
         """Report total memory value."""
         meminfo = util.readfile('/proc/meminfo')
         memory = util.firstmatch(r'MemTotal:\s*(.*) kB', meminfo, True)
         return util.kilobytes2human(memory)
 
     @staticmethod
-    def _find_swap_total():
+    def _get_swap_total():
         """Report total swap value."""
         meminfo = util.readfile('/proc/meminfo')
         swap = util.firstmatch(r'SwapTotal:\s*(.*) kB', meminfo, True)

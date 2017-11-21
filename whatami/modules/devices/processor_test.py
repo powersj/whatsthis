@@ -8,18 +8,15 @@ from ..base import TestCase
 class TestCaseProcessor(TestCase):
     """Processor test case."""
 
-    def setUp(self):
-        """Set up a processor object for testing."""
-        self.processor = Processor()
-
     @patch('whatami.modules.util.readfile')
-    def test_empty_cpuinfo(self, mock_readfile):
+    @staticmethod
+    def test_empty_cpuinfo(mock_readfile):
         """Test when empty output from cpuinfo."""
         mock_readfile.return_value = ''
-        self.processor.discovery()
+        processor = Processor()
 
-        assert self.processor.cpus == 0
-        assert self.processor.model == ''
+        assert processor.cpus == 0
+        assert processor.model == ''
 
     @patch('whatami.modules.util.readfile')
     def test_positive(self, mock_readfile):
@@ -30,12 +27,11 @@ class TestCaseProcessor(TestCase):
         processor   : 1
         processor   : 2
         """
-        self.processor.discovery()
+        processor = Processor()
 
         test_count = 3
         test_model = 'Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz'
-        print(self.processor)
-        assert self.processor.cpus == test_count
-        assert self.processor.model == test_model
+        assert processor.cpus == test_count
+        assert processor.model == test_model
         self.assertIn('Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz',
-                      str(self.processor))
+                      str(processor))
