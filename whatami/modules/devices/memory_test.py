@@ -13,8 +13,8 @@ class TestCaseMemory(TestCase):
         """Test when empty output from meminfo."""
         mock_readfile.return_value = ''
         memory = Memory()
-        assert memory.system_total == '0KB'
-        assert memory.swap_total == '0KB'
+        self.assertEqual(memory.system_total, '0KB')
+        self.assertEqual(memory.swap_total, '0KB')
         self.assertIn('0KB', str(memory))
 
     @patch('whatami.modules.util.readfile')
@@ -25,6 +25,6 @@ class TestCaseMemory(TestCase):
         SwapTotal:       2097148 kB
         """
         memory = Memory()
-        assert memory.system_total == '16GB'
-        assert memory.swap_total == '2GB'
+        self.assertEqual(memory.system_total, '16GB')
+        self.assertEqual(memory.swap_total, '2GB')
         self.assertIn('16GB', str(memory))

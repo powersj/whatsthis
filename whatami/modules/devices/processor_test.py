@@ -9,14 +9,12 @@ class TestCaseProcessor(TestCase):
     """Processor test case."""
 
     @patch('whatami.modules.util.readfile')
-    @staticmethod
-    def test_empty_cpuinfo(mock_readfile):
+    def test_empty_cpuinfo(self, mock_readfile):
         """Test when empty output from cpuinfo."""
         mock_readfile.return_value = ''
         processor = Processor()
-
-        assert processor.cpus == 0
-        assert processor.model == ''
+        self.assertEqual(processor.cpus, 0)
+        self.assertEqual(processor.model, '')
 
     @patch('whatami.modules.util.readfile')
     def test_positive(self, mock_readfile):
@@ -28,10 +26,7 @@ class TestCaseProcessor(TestCase):
         processor   : 2
         """
         processor = Processor()
-
-        test_count = 3
         test_model = 'Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz'
-        assert processor.cpus == test_count
-        assert processor.model == test_model
-        self.assertIn('Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz',
-                      str(processor))
+        self.assertEqual(processor.cpus, 3)
+        self.assertEqual(processor.model, test_model)
+        self.assertIn(test_model, str(processor))

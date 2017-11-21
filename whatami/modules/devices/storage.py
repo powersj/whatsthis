@@ -17,8 +17,8 @@ class Storage(base.Module):
     def __init__(self):
         """Initialization."""
         super(Storage, self).__init__()
-
-        self.devices = []
+        self.log.debug('Discovering storage...')
+        self.devices = self._get_devices()
 
     def __str__(self):
         """Return each storage device found."""
@@ -30,18 +30,19 @@ class Storage(base.Module):
             table.append(str(device).split(' '))
         return tabulate(table)
 
-    def discovery(self):
+    def _get_devices(self):
         """Utilize inforamtion in /sys/block.
 
         Ignores any virtual block devices.
         """
-        self.log.debug('Discovering storage...')
-
+        devices = []
         virtual_devices = self._list_virtual_devices()
         for device in self._list_devices():
             if device in virtual_devices:
                 continue
-            self.devices.append(BlockDevice(device))
+            devices.append(BlockDevice(device))
+
+        return devices
 
     @staticmethod
     def _list_virtual_devices():
