@@ -6,6 +6,7 @@ from whatami.discovery import launch
 if __name__ == '__main__':
     PARSER = argparse.ArgumentParser()
     PARSER.add_argument('--debug', action='store_true')
+    PARSER.add_argument('--json', action='store_true')
     ARGS = PARSER.parse_args()
 
-    launch(ARGS.debug)
+    launch(ARGS.debug, ARGS.json)

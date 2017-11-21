@@ -23,6 +23,10 @@ class Module(object):
         """By default return whatever __str__ has instead of useless object."""
         return self.__str__()
 
+    def to_json(self):
+        """Return dictionary like item for JSON output."""
+        raise NotImplementedError
+
 
 class TestCase(unittest.TestCase):
     """TestCase base class."""
