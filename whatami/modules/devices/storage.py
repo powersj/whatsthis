@@ -17,6 +17,7 @@ class Storage(base.Module):
     def __init__(self):
         """Initialization."""
         super(Storage, self).__init__()
+        self.order = 200
         self.devices = self._get_devices()
 
     def __str__(self):
@@ -25,9 +26,10 @@ class Storage(base.Module):
             return 'No storage devices found'
 
         table = []
+        headers = ['name', 'size']
         for device in self.devices:
             table.append(str(device).split(' '))
-        return tabulate(table)
+        return tabulate(table, headers=headers)
 
     def _get_devices(self):
         """Utilize inforamtion in /sys/block.

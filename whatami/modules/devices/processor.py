@@ -1,6 +1,4 @@
 """Processor module."""
-from tabulate import tabulate
-
 from .. import base
 from .. import util
 
@@ -11,15 +9,13 @@ class Processor(base.Module):
     def __init__(self):
         """Initialization."""
         super(Processor, self).__init__()
+        self.order = 100
         self.cpus = self._get_cpu_total()
         self.model = self._get_model()
 
     def __str__(self):
         """Return string with the nubmer and type of processors."""
-        table = [
-            [self.cpus, self.model]
-        ]
-        return tabulate(table)
+        return "%sx %s" % (self.cpus, self.model)
 
     @staticmethod
     def _get_cpu_total():

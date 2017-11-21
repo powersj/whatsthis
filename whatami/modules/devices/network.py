@@ -13,6 +13,7 @@ class Network(base.Module):
     def __init__(self):
         """Initialization."""
         super(Network, self).__init__()
+        self.order = 300
         self.devices = self._get_devices()
 
     def __str__(self):
@@ -21,9 +22,10 @@ class Network(base.Module):
             return 'No network devices found'
 
         table = []
+        headers = ['name', 'type', 'mtu', 'mac']
         for adapter in self.devices:
             table.append(str(adapter).split(' '))
-        return tabulate(table)
+        return tabulate(table, headers=headers)
 
     def _get_devices(self):
         """Get all devices from /sys/class/net."""

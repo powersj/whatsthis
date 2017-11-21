@@ -27,5 +27,7 @@ def launch(debug=False, json_output=False):
         module_json = [module.to_json() for module in modules.values()]
         print(json.dumps(module_json, indent=2))
     else:
-        for _, module in modules.items():
+        for name, module in sorted(modules.items(), key=lambda x: x[1].order):
+            print(name)
             print(module)
+            print()

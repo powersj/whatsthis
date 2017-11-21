@@ -14,6 +14,7 @@ class Module(object):
     def __init__(self):
         """Set up logging for each."""
         self.log = logging.getLogger(name=self.__class__.__name__)
+        self.order = 100000
 
     def __str__(self):
         """By default return an empty string."""
