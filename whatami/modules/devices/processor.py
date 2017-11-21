@@ -11,7 +11,6 @@ class Processor(base.Module):
     def __init__(self):
         """Initialization."""
         super(Processor, self).__init__()
-        self.log.debug('Discovering processors...')
         self.cpus = self._get_cpu_total()
         self.model = self._get_model()
 

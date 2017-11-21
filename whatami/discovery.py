@@ -19,7 +19,7 @@ def launch(debug=False, json=False):
 
     modules = {}
     for module in Module.__subclasses__():
-        log.info('Loading module: %s', module.__name__)
+        log.debug('Loading module: %s', module.__name__)
         modules[module.__name__] = module()
 
     for _, module in modules.items():

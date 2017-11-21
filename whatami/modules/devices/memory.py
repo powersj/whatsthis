@@ -11,7 +11,6 @@ class Memory(base.Module):
     def __init__(self):
         """Initialization."""
         super(Memory, self).__init__()
-        self.log.debug('Discovering memory...')
         self.system_total = self._get_memory_total()
         self.swap_total = self._get_swap_total()
 

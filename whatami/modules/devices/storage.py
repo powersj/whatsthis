@@ -17,7 +17,6 @@ class Storage(base.Module):
     def __init__(self):
         """Initialization."""
         super(Storage, self).__init__()
-        self.log.debug('Discovering storage...')
         self.devices = self._get_devices()
 
     def __str__(self):

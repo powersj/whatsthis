@@ -14,7 +14,6 @@ class Network(base.Module):
     def __init__(self):
         """Initialization."""
         super(Network, self).__init__()
-        self.log.debug('Discovering network...')
         self.adapters = self._get_adapters()
 
     def __str__(self):
