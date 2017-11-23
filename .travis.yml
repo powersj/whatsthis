@@ -1,6 +1,7 @@
 language: python
+sudo: false
 python: [3.4, 3.5, 3.6]
-install: pip install tox
+install: pip install --user tox codecov
 script: tox
-after_success: 
-  - bash <(curl -s https://codecov.io/bash)
+after_success:
+  - codecov
