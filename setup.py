@@ -5,11 +5,16 @@ from setuptools import setup
 
 NAME = 'whatami'
 PWD = os.path.abspath(os.path.dirname(__name__))
-METADATA_FILE = os.path.join(PWD, NAME, '__version__.py')
 
+METADATA_FILE = os.path.join(PWD, NAME, '__init__.py')
 METADATA = {}
-with open(METADATA_FILE, 'r') as file:
-    exec(file.read(), METADATA)
+with open(METADATA_FILE, 'r') as init_file:
+    exec(init_file.read(), METADATA)
+
+REQUIREMENTS_FILE = os.path.join(PWD, 'requirements.txt')
+REQUIREMENTS = []
+with open(REQUIREMENTS_FILE, 'r') as req_file:
+    REQUIREMENTS = req_file.read().splitlines()
 
 setup(
     name=NAME,
@@ -20,7 +25,7 @@ setup(
     url=METADATA['__url__'],
     license=METADATA['__license__'],
     packages=[NAME],
-    install_requires=['tabulate'],
+    install_requires=REQUIREMENTS,
     zip_safe=True,
     entry_points={
         'console_scripts': ['%s=%s' % (NAME, NAME)]

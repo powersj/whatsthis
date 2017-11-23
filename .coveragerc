@@ -5,5 +5,5 @@ show_missing = True
 [run]
 omit =
     __init__.py
-    __version__.py
+    __main__.py
     whatami/discovery.py
