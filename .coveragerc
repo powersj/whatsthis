@@ -3,4 +3,7 @@ show_missing = True
 # skip_covered = True
 
 [run]
-omit = whatami/discovery.py
+omit =
+    __init__.py
+    __version__.py
+    whatami/discovery.py

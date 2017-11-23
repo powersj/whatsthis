@@ -20,7 +20,7 @@ setup(
     url=METADATA['__url__'],
     license=METADATA['__license__'],
     packages=[NAME],
-    install_requires=[tabulate],
+    install_requires=['tabulate'],
     zip_safe=True,
     entry_points={
         'console_scripts': ['%s=%s' % (NAME, NAME)]

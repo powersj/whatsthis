@@ -10,7 +10,7 @@ class TestCaseUtil(TestCase):
 
     def test_readfile_nonexistent(self):
         """Test nonexistent file."""
-        result = util.readfile('/tmp/fakefile')
+        result = util.readfile('fakefile')
         self.assertEqual(result, '')
 
     def test_readfile(self):
