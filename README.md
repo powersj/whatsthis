@@ -7,3 +7,25 @@
 Am I in a cloud, on a container, or just plain metal? This is a Python 3 based CLI app to determine what a system is.
 
 This started as a project to play and learn more about /proc and /sys on a Linux system as well as Python 3.
+
+## Prereqs
+These can either be obtained via apt:
+
+```
+$ apt update
+$ apt install python3-tabulate
+```
+
+Or if you prefer to use pip3 point it at the requirements.txt file:
+
+```
+$ pip3 install --user tabulate
+```
+
+## How to Run
+
+```
+python3 -m whatami
+```
+
+The output can be altered with the `--josn` or `--csv` flags.
