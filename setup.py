@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Python packaging configuration."""
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 NAME = 'whatami'
 PWD = os.path.abspath(os.path.dirname(__name__))
@@ -24,11 +24,11 @@ setup(
     author_email=METADATA['__author_email__'],
     url=METADATA['__url__'],
     license=METADATA['__license__'],
-    packages=[NAME],
+    packages=find_packages('.'),
     install_requires=REQUIREMENTS,
     zip_safe=True,
     entry_points={
-        'console_scripts': ['%s=%s' % (NAME, NAME)]
+        'console_scripts': ['%s=%s.__main__:main' % (NAME, NAME)]
     },
     classifiers=(
         'Development Status :: 5 - Production/Stable',
