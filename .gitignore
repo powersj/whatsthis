@@ -1,0 +1,17 @@
+# Python build and distribute items
+__pycache__/
+.eggs
+*.egg-info/
+*.pyc
+build
+dist
+venv
+
+# Testing items
+.tox/
+.coverage
+.noseids
+cover
+
+# Collect
+*.tar.gz
