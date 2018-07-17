@@ -2,6 +2,7 @@
 """Program entry point and arg parser."""
 
 import argparse
+import json
 import logging
 import platform
 import sys
@@ -25,6 +26,9 @@ def _setup_args():
 
     subparsers = parser.add_subparsers(title='Subcommands', dest='subcommand')
     subparsers.add_parser(
+        'version', help='print version'
+    )
+    subparsers.add_parser(
         'features', help='list defined features'
     )
     collect = subparsers.add_parser(
@@ -38,7 +42,7 @@ def _setup_args():
 
 
 def _setup_logging(debug=False):
-    """TODO."""
+    """Set up the root logger with format and level."""
     log = logging.getLogger()
 
     level = logging.DEBUG if debug else logging.INFO
@@ -53,9 +57,15 @@ def _setup_logging(debug=False):
 
 
 def _print_features():
-    """TODO."""
+    """Print available features."""
     import whatsthis
-    print(whatsthis.__features__)
+    print(json.dumps(whatsthis.__features__, indent=4, sort_keys=True))
+
+
+def _print_version():
+    """Print current version."""
+    import whatsthis
+    print(whatsthis.__version__)
 
 
 def verify_platform_support():
@@ -88,6 +98,8 @@ def launch():
         _print_features()
     elif args.subcommand == 'collect':
         Collect(args.output_dir)
+    elif args.subcommand == 'version':
+        _print_version()
 
 
 if __name__ == '__main__':
