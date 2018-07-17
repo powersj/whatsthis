@@ -7,6 +7,9 @@ __features__ = {
     'hardware': {},
     'subcommands': [
         'collect',
-        'features'
+        'features',
+        'version'
     ]
 }
+
+__version__ = '18.1.1'
