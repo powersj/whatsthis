@@ -66,16 +66,21 @@ class Collect:
         """
         self._log = logging.getLogger(__name__)
         self.tmp_dir = tempfile.mkdtemp(prefix='whatsthis-')
-        self._log.debug('created %s', self.tmp_dir)
+        self._log.debug('tempdir: %s', self.tmp_dir)
 
-        self.gather_proc()
-        self.gather_sys()
+        self.collect()
         self.tar_output(output_dir)
         shutil.rmtree(self.tmp_dir)
 
+    def collect(self):
+        """Collect data."""
+        self._log.info('starting collection')
+        self.gather_proc()
+        self.gather_sys()
+
     def gather_proc(self):
         """Collect specific files from /proc."""
-        self._log.info('collecting /proc')
+        self._log.info('/proc')
 
         for file_path in PROC_FILES:
             self._copy_file(file_path)
@@ -86,7 +91,7 @@ class Collect:
         Requires the use of -noleaf due to the odd behavior of sysfs.
         Cannot assume it acts like any other filesystem.
         """
-        self._log.info('collecting /sys')
+        self._log.info('/sys')
 
         out, _, _ = execute([
             'find', '/sys', '-noleaf', '-type', 'f', '-perm', '/444'
@@ -104,7 +109,7 @@ class Collect:
         This produces a tarball with only the subdirectories that were
         produces in the temporary directory.
         """
-        self._log.info('compressing output')
+        self._log.info('compressing data')
         tar_filename = '%s-%s.tar.gz' % (
             platform.node(),
             datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
@@ -114,6 +119,8 @@ class Collect:
         with tarfile.open(tar_path, "w:gz") as tar:
             for subdir in [f for f in os.walk(self.tmp_dir)][0][1]:
                 tar.add(os.path.join(self.tmp_dir, subdir), arcname=subdir)
+
+        self._log.info('wrote %s', tar_path)
 
     def _copy_file(self, file_path):
         """Use cp to properly copy a file from /proc."""
