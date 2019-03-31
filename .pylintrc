@@ -5,4 +5,5 @@ jobs=4
 [MESSAGES CONTROL]
 # R0903: Too few public methods (%s/%s)
 # C0103: Invalid name
-disable=R0903,C0103
+# W0107: Unnecessary pass statement
+disable=R0903,C0103,W0107
