@@ -1,0 +1,25 @@
+name: whatsthis  # check to see if it's available
+version: git
+summary: STUFF GOES HERE. # 79 char long summary
+description: |
+  MORE STUFF...
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs
+
+apps:
+  whatsthis:
+    command: whatsthis
+    plugs:
+      - home
+parts: 
+  whatsthis:
+    source: https://github.com/powersj/whatsthis
+    source-type: git
+    plugin: python
+    python-version: python3
+    
+    build-packages:
+      - python3
+      
+    stage-packages:
+      - python3
