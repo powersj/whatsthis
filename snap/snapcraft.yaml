@@ -1,8 +1,9 @@
 name: whatsthis  # check to see if it's available
 version: git
-summary: STUFF GOES HERE. # 79 char long summary
+summary: This is a Python 3 based CLI app to determine what a system is. # 79 char long summary
 description: |
-  MORE STUFF...
+  Am I in a cloud, on a container, or just plain metal? This is a Python 3 based CLI app to determine what a system is. Started after wanting to explore /proc and /sys and to better understand what type of system I may be on at any given time.
+
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs
 
@@ -11,6 +12,16 @@ apps:
     command: whatsthis
     plugs:
       - home
+      - hardware-observe
+      - kernel-module-observe
+      - log-observe
+      - mount-observe
+      - network-observe
+      - physical-memory-observe
+      - system-observe
+      - upower-observe
+      - system-files
+      
 parts: 
   whatsthis:
     source: https://github.com/powersj/whatsthis
