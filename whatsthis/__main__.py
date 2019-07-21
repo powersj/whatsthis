@@ -15,27 +15,29 @@ def _setup_args():
     """TODO."""
     parser = argparse.ArgumentParser(prog='whatsthis')
     parser.add_argument(
-        '--data-dir', help='use previously collected data in this directory'
+        '--data-dir',
+        help='use previously collected data from specified directory'
     )
     parser.add_argument(
-        '--debug', action='store_true', help='show debug logging'
+        '--debug', action='store_true', help='enable debug logging'
     )
     parser.add_argument(
-        '--json', action='store_true', help='output in JSON rather than text'
+        '--json', action='store_true', help='enable output in JSON'
     )
 
     subparsers = parser.add_subparsers(title='Subcommands', dest='subcommand')
-    subparsers.add_parser(
-        'version', help='print version'
-    )
-    subparsers.add_parser(
-        'features', help='list defined features'
-    )
     collect = subparsers.add_parser(
-        'collect', help='collect system data required data'
+        'collect', help='collect required system data'
     )
     collect.add_argument(
-        '--output-dir', default='', help='place collected data here'
+        '--output-dir', default='',
+        help='place collected data here instead of `pwd`'
+    )
+    subparsers.add_parser(
+        'features', help='return parseable list of feature flags'
+    )
+    subparsers.add_parser(
+        'version', help='return version of application'
     )
 
     return parser.parse_args()
@@ -68,7 +70,7 @@ def _print_version():
     print(whatsthis.__version__)
 
 
-def verify_platform_support():
+def _verify_platform_support():
     """Determine platform and kernel version support for sysfs."""
     if platform.system() != 'Linux':
         print('error: only linux platform supported')
@@ -90,14 +92,14 @@ def launch():
     args = _setup_args()
     _setup_logging(args.debug)
 
-    verify_platform_support()
+    _verify_platform_support()
 
     if not args.subcommand:
         Discovery(args.json, args.data_dir)
-    elif args.subcommand == 'features':
-        _print_features()
     elif args.subcommand == 'collect':
         Collect(args.output_dir)
+    elif args.subcommand == 'features':
+        _print_features()
     elif args.subcommand == 'version':
         _print_version()
 

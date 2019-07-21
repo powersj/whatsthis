@@ -33,6 +33,7 @@ Example usage and subcommands:
 whatsthis
 whatsthis collect
 whatsthis features
+whatsthis version
 ```
 
 See `whatsthis -h` for more information.

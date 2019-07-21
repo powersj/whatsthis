@@ -1,0 +1,31 @@
+name: whatsthis
+summary: This is a Python3 based CLI app to determine what a system is.
+description: |
+        Am I in a cloud, on a container, or just plain metal?
+version: git
+version-script: git rev-parse --short HEAD
+base: core18
+grade: stable
+confinement: strict
+
+apps:
+  whatsthis:
+    command: whatsthis
+    plugs:
+      - home
+      - hardware-observe
+      - kernel-module-observe
+      - log-observe
+      - mount-observe
+      - network-observe
+      - physical-memory-observe
+      - system-observe
+      - upower-observe
+      #- system-files
+
+parts:
+  whatsthis:
+    source: https://github.com/powersj/whatsthis
+    source-type: git
+    plugin: python
+    python-version: python3
