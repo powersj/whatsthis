@@ -1,10 +1,7 @@
 # This file is part of whatsthis. See LICENSE file for license information.
-"""whatsthis module."""
+"""__init__ whatsthis module."""
 
 __features__ = {
-    'cloud': {},
-    'distro': {},
-    'hardware': {},
     'subcommands': [
         'collect',
         'features',
@@ -12,4 +9,4 @@ __features__ = {
     ]
 }
 
-__version__ = '18.1.1'
+__version__ = '19.1'

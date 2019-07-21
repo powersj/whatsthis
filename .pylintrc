@@ -1,9 +1,0 @@
-[MASTER]
-# Use multiple processes to speed up Pylint (--go-faster)
-jobs=4
-
-[MESSAGES CONTROL]
-# R0903: Too few public methods (%s/%s)
-# C0103: Invalid name
-# W0107: Unnecessary pass statement
-disable=R0903,C0103,W0107

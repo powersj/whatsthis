@@ -1,14 +1,15 @@
 # This file is part of whatsthis. See LICENSE file for license information.
-"""TODO."""
+"""Discover the system information.
 
-from whatsthis.instance import Instance
+This can be based on the current system or via specific data
+directories.
+"""
 
 
-class Discovery:
-    """TODO."""
+class Discovery:  # pylint: disable=R0903
+    """Do the discovering."""
 
     def __init__(self, json=False, data_dir=None):
-        """TODO."""
+        """Initialize discovery."""
         self.json = json
         self.data_dir = data_dir
-        self.instance = Instance()

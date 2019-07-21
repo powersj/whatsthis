@@ -1,3 +1,5 @@
+# This file is part of whatsthis. See LICENSE file for license information.
+
 PYTHON = python3
 SETUP  := $(PYTHON) setup.py
 
@@ -8,7 +10,7 @@ build:
 
 clean:
 	$(SETUP) clean
-	rm -rf .tox .eggs *.egg-info build dist venv
+	rm -rf .coverage .tox .mypy_cache .eggs *.egg-info build dist venv
 	@find . -regex '.*\(__pycache__\|\.py[co]\)' -delete
 
 install:
