@@ -68,15 +68,11 @@ class Collect:
         self.tmp_dir = tempfile.mkdtemp(prefix='whatsthis-')
         self._log.debug('tempdir: %s', self.tmp_dir)
 
-        self.collect()
-        self.tar_output(output_dir)
-        shutil.rmtree(self.tmp_dir)
-
-    def collect(self):
-        """Collect data."""
         self._log.info('starting collection')
         self.gather_proc()
         self.gather_sys()
+        self.tar_output(output_dir)
+        shutil.rmtree(self.tmp_dir)
 
     def gather_proc(self):
         """Collect specific files from /proc."""
@@ -98,7 +94,9 @@ class Collect:
         ])
 
         for file_path in sorted(out.split('\n')):
-            if file_path.startswith('/sys/kernel') or 'cgroup' in file_path:
+            if file_path.startswith('/sys/kernel'):
+                continue
+            if 'cgroup' in file_path:
                 continue
 
             self._dd_file(file_path)
@@ -147,16 +145,21 @@ class Collect:
         tries to catch the usual list.
         """
         self._log.debug(file_path)
+
         self._make_parent_dir(file_path)
         filename = os.path.join(self.tmp_dir, file_path[1:])
 
-        _, err, return_code = execute([
-            'dd', 'status=noxfer', 'iflag=nonblock',
+        cmd = [
+            'dd',
+            'status=noxfer',
+            'iflag=nonblock',
             'if=%s' % file_path,
             'of=%s' % filename
-        ])
+        ]
+        _, err, return_code = execute(cmd)
 
         if return_code != 0:
+            print('%s', file_path)
             if 'Input/output error\n0+0 records in\n0+0 records out' in err:
                 self._remove_file(filename)
             elif 'Permission denied' in err:
@@ -170,6 +173,10 @@ class Collect:
             elif 'No such device' in err:
                 self._remove_file(filename)
             elif 'Operation not permitted' in err:
+                self._remove_file(filename)
+            elif 'File too large' in err:
+                self._remove_file(filename)
+            elif 'No such file or directory' in err:
                 self._remove_file(filename)
             else:
                 self._log.warning('failed to dd %s', file_path)
