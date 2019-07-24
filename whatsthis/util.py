@@ -17,22 +17,17 @@ def execute(args, data=None, env=None, shell=False):
         Tuple of stdout, stderr, return code
 
     """
-    if isinstance(args, str):
-        args = args.split(' ')
+    args = args.split(' ') if isinstance(args, str) else args
 
-    try:
-        process = subprocess.Popen(
-            args,
-            env=env,
-            shell=shell,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
-    except FileNotFoundError:
-        return '', 'No such file or directory', 1
+    process = subprocess.Popen(
+        args,
+        env=env,
+        shell=shell,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
 
     (out, err) = process.communicate(data)
-
     out = '' if not out else out.rstrip().decode("utf-8")
     err = '' if not err else err.rstrip().decode("utf-8")
 
