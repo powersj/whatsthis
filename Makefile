@@ -32,6 +32,6 @@ test:
 venv:
 	$(PYTHON) -m virtualenv -p /usr/bin/$(PYTHON) venv
 	venv/bin/pip install -Ur requirements.txt
-	venv/bin/pip install -Ur test-requirements.txt
+	venv/bin/pip install -Ur requirements-test.txt
 	@echo "Now run the following to activate the virtual env:"
 	@echo ". venv/bin/activate"
