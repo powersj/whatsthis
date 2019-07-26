@@ -2,11 +2,11 @@
 """Python packaging configuration."""
 
 import os
-from setuptools import find_packages, setup
+from setuptools import setup
 
-import whatsthis
+from whatsthis import __author__, __title__, __version__
 
-PWD = os.path.abspath(os.path.dirname(__name__))
+PWD = os.path.abspath(os.path.dirname(__title__))
 REQUIREMENTS_FILE = os.path.join(PWD, 'requirements.txt')
 REQUIREMENTS = []
 with open(REQUIREMENTS_FILE, 'r') as req_file:
@@ -17,17 +17,17 @@ with open(README_FILE, 'r') as readme:
     README_TEXT = readme.read()
 
 setup(
-    name='whatsthis',
-    version=whatsthis.__version__,
+    name=__title__,
+    version=__version__,
     description=('Am I in a cloud, on a container, or just plain metal?'),
     long_description=README_TEXT,
     long_description_content_type='text/markdown',
-    author='Joshua Powers',
-    url='https://github.com/powersj/whatsthis',
+    author=__author__,
+    url='https://github.com/powersj/%s' % __title__,
     license='GNU General Public License v3 (GPLv3)',
-    packages=find_packages(),
+    packages=[__title__],
     entry_points={
-        'console_scripts': ['whatsthis=whatsthis.__main__:launch']
+        'console_scripts': ['%s=%s.__main__:launch' % (__title__, __title__)]
     },
     python_requires='>=3.4',
     install_requires=REQUIREMENTS,
