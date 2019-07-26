@@ -7,6 +7,7 @@ import logging
 import platform
 import sys
 
+from whatsthis import __features__, __version__
 from whatsthis.collect import Collect
 from whatsthis.discovery import Discovery
 
@@ -47,27 +48,17 @@ def _setup_logging(debug=False):
     """Set up the root logger with format and level."""
     log = logging.getLogger()
 
-    level = logging.DEBUG if debug else logging.INFO
-    log.setLevel(level)
+    if debug:
+        level = logging.DEBUG
+        formatter = logging.Formatter('%(asctime)s - %(message)s')
+    else:
+        level = logging.INFO
+        formatter = logging.Formatter('%(message)s')
 
     console = logging.StreamHandler()
-    formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
     console.setFormatter(formatter)
+    log.setLevel(level)
     log.addHandler(console)
-
-
-def _print_features():
-    """Print available features."""
-    import whatsthis
-    print(json.dumps(whatsthis.__features__, indent=4, sort_keys=True))
-
-
-def _print_version():
-    """Print current version."""
-    import whatsthis
-    print(whatsthis.__version__)
 
 
 def _verify_platform_support():
@@ -76,14 +67,14 @@ def _verify_platform_support():
         print('error: only linux platform supported')
         sys.exit(1)
 
-    major, minor, _ = platform.python_version_tuple()
-    if int(major) < 3 or int(minor) < 4:
-        print('error: require at least python 3.4')
-        sys.exit(1)
-
     major, minor, _ = platform.release().split('.')
     if int(major) < 3 and int(minor) < 6:
-        print('error: no sysfs support')
+        print('error: at least kernel 3.6 for sysfs support required')
+        sys.exit(1)
+
+    major, minor, _ = platform.python_version_tuple()
+    if int(major) < 3 or int(minor) < 5:
+        print('error: at least python 3.5 required')
         sys.exit(1)
 
 
@@ -91,7 +82,6 @@ def launch():
     """Run it all."""
     args = _setup_args()
     _setup_logging(args.debug)
-
     _verify_platform_support()
 
     if not args.subcommand:
@@ -99,9 +89,9 @@ def launch():
     elif args.subcommand == 'collect':
         Collect(args.output_dir)
     elif args.subcommand == 'features':
-        _print_features()
+        print(json.dumps(__features__, indent=4, sort_keys=True))
     elif args.subcommand == 'version':
-        _print_version()
+        print(__version__)
 
 
 if __name__ == '__main__':
