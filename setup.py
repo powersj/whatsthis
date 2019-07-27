@@ -2,7 +2,7 @@
 """Python packaging configuration."""
 
 import os
-from setuptools import setup
+from setuptools import find_packages, setup
 
 from whatsthis import __author__, __title__, __version__
 
@@ -25,7 +25,7 @@ setup(
     author=__author__,
     url='https://github.com/powersj/%s' % __title__,
     license='GNU General Public License v3 (GPLv3)',
-    packages=[__title__],
+    packages=find_packages(),
     entry_points={
         'console_scripts': ['%s=%s.__main__:launch' % (__title__, __title__)]
     },
