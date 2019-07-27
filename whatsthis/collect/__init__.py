@@ -42,8 +42,8 @@ class Collect:
 
         logging.info('starting collection')
         logging.debug('tempdir: %s', self.tmp_dir)
-        self.gather_proc()
-        self.gather_sys()
+        self.proc()
+        self.sys()
 
         tar_filename = '%s-%s.tar.gz' % (
             platform.node(),
@@ -51,9 +51,11 @@ class Collect:
         )
         tar(self.tmp_dir, os.path.join(output_dir, tar_filename))
 
+    def __del__(self):
+        """On delete clean up."""
         shutil.rmtree(self.tmp_dir)
 
-    def gather_proc(self):
+    def proc(self):
         """Collect specific files from /proc."""
         logging.info('/proc')
 
@@ -62,7 +64,7 @@ class Collect:
                 continue
             copy(file_path, os.path.join(self.tmp_dir, file_path[1:]))
 
-    def gather_sys(self):
+    def sys(self):
         """Collect all of /sys.
 
         Requires the use of -noleaf due to the odd behavior of sysfs.
