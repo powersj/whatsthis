@@ -63,17 +63,17 @@ def _setup_logging(debug=False):
 
 def _verify_platform_support():
     """Determine platform and kernel version support for sysfs."""
-    if platform.system() != 'Linux':
+    if sys.platform != 'linux':
         print('error: only linux platform supported')
         sys.exit(1)
 
     major, minor, _ = platform.release().split('.')
-    if int(major) < 3 and int(minor) < 6:
+    if int(major) < 3 or (int(major) == 3 and int(minor) < 6):
         print('error: at least kernel 3.6 for sysfs support required')
         sys.exit(1)
 
     major, minor, _ = platform.python_version_tuple()
-    if int(major) < 3 or int(minor) < 5:
+    if int(major) < 3 or (int(major) == 3 and int(minor) < 5):
         print('error: at least python 3.5 required')
         sys.exit(1)
 

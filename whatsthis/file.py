@@ -12,7 +12,7 @@ def copy(src, dst):
     """Use cp to properly copy a file from /proc."""
     logging.debug('copying %s to %s', src, dst)
 
-    make_dir(os.path.dirname(dst))
+    mkdir(os.path.dirname(dst))
     result = execute([
         'cp', '--recursive', '--no-dereference',
         '--preserve=mode,timestamps', '--dereference',
@@ -34,7 +34,7 @@ def dd(src, dst):  # pylint: disable=invalid-name
     """
     logging.debug('dd %s to %s', src, dst)
 
-    make_dir(os.path.dirname(dst))
+    mkdir(os.path.dirname(dst))
     result = execute([
         'dd', 'status=noxfer', 'iflag=nonblock',
         'if=%s' % src,
@@ -63,7 +63,7 @@ def remove(src):
         pass
 
 
-def make_dir(dirname):
+def mkdir(dirname):
     """Use to make multiple directories at once."""
     logging.debug('creating %s', dirname)
 
