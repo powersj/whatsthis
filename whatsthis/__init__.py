@@ -6,7 +6,12 @@ __version__ = '19.1'
 __author__ = 'Joshua Powers'
 
 __features__ = {
-    'probes': {},
+    'probes': {
+        'processor': [
+            'core',
+            'memory',
+        ]
+    },
     'subcommands': [
         'collect',
         'features',

@@ -10,7 +10,7 @@ build:
 
 clean:
 	$(SETUP) clean
-	rm -rf .coverage .tox .mypy_cache .eggs *.egg-info build dist venv
+	rm -rf .coverage .tox .mypy_cache .eggs *.egg-info build dist
 	@find . -regex '.*\(__pycache__\|\.py[co]\)' -delete
 
 install:
