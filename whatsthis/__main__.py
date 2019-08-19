@@ -85,7 +85,7 @@ def launch():
     _verify_platform_support()
 
     if not args.subcommand:
-        Discovery(args.json, args.data_dir)
+        Discovery(args.data_dir)
     elif args.subcommand == 'collect':
         Collect(args.output_dir)
     elif args.subcommand == 'features':
