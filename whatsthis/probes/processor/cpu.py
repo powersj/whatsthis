@@ -19,7 +19,26 @@ class CPU(Probe):
         """TODO."""
         return self.index < other.index
 
+    def __str__(self):
+        """TODO."""
+        return 'cpu %s: %s/%s/%s' % (
+            self.index, self.socket_index, self.core_index, self.thread_index
+        )
+
     @property
-    def core_id(self):
+    def socket_index(self):
+        """TODO."""
+        return self._sysfs_read('%s/topology/physical_package_id' % self.path)
+
+    @property
+    def core_index(self):
         """TODO."""
         return self._sysfs_read('%s/topology/core_id' % self.path)
+
+    @property
+    def thread_index(self):
+        """TODO."""
+        siblings = self._sysfs_read(
+            '%s/topology/thread_siblings_list' % self.path
+        )
+        return siblings.split(',').index(self.index)

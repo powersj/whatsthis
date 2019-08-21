@@ -21,7 +21,7 @@ class Processor(Probe):
             logging.info('node: %s', node.index)
             logging.info('\tmemory: %s', self._human_units(node.memory.total))
             for cpu in sorted(node.cpus):
-                logging.info('\tcore: %s', cpu.core_id)
+                logging.info('\t%s', cpu)
 
     @property
     def nodes(self):
