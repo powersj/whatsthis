@@ -2,6 +2,7 @@
 """Initialize probes."""
 
 import glob
+import math
 import os
 import platform
 
@@ -28,8 +29,17 @@ class Probe:
     def _human_units(value):
         """TODO."""
         if value.endswith('kB'):
-            value = str(int(int(value.rstrip('kB')) / 1000 / 1000)) + 'GB'
-        return value
+            return str(int(int(value.rstrip('kB')) / 1000 / 1000)) + 'GB'
+        if value.endswith('K'):
+            value = int(value.rstrip('K'))
+            if value == 0:
+                return "0B"
+            size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+            i = int(math.floor(math.log(value, 1024)))
+            p = math.pow(1024, i)
+            s = round(value / p, 2)
+            return "%s %s" % (s, size_name[i])
+
 
     @staticmethod
     def _sysfs_search(pattern):
