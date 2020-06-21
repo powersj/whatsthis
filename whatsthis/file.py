@@ -32,7 +32,7 @@ def copy(src, dst):
     return True
 
 
-def dd(src, dst):  # pylint: disable=invalid-name
+def dd(src, dst):
     """Use dd to copy a file.
 
     There are times where dd fails due to a list of reasons. This
