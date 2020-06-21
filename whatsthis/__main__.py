@@ -14,32 +14,20 @@ from whatsthis.discovery import Discovery
 
 def _setup_args():
     """TODO."""
-    parser = argparse.ArgumentParser(prog='whatsthis')
+    parser = argparse.ArgumentParser(prog="whatsthis")
     parser.add_argument(
-        '--data-dir',
-        help='use previously collected data from specified directory'
+        "--data-dir", help="use previously collected data from specified directory"
     )
-    parser.add_argument(
-        '--debug', action='store_true', help='enable debug logging'
-    )
-    parser.add_argument(
-        '--json', action='store_true', help='enable output in JSON'
-    )
+    parser.add_argument("--debug", action="store_true", help="enable debug logging")
+    parser.add_argument("--json", action="store_true", help="enable output in JSON")
 
-    subparsers = parser.add_subparsers(title='Subcommands', dest='subcommand')
-    collect = subparsers.add_parser(
-        'collect', help='collect required system data'
-    )
+    subparsers = parser.add_subparsers(title="Subcommands", dest="subcommand")
+    collect = subparsers.add_parser("collect", help="collect required system data")
     collect.add_argument(
-        '--output-dir', default='',
-        help='place collected data here instead of `pwd`'
+        "--output-dir", default="", help="place collected data here instead of `pwd`"
     )
-    subparsers.add_parser(
-        'features', help='return parseable list of feature flags'
-    )
-    subparsers.add_parser(
-        'version', help='return version of application'
-    )
+    subparsers.add_parser("features", help="return parseable list of feature flags")
+    subparsers.add_parser("version", help="return version of application")
 
     return parser.parse_args()
 
@@ -50,10 +38,10 @@ def _setup_logging(debug=False):
 
     if debug:
         level = logging.DEBUG
-        formatter = logging.Formatter('%(asctime)s - %(message)s')
+        formatter = logging.Formatter("%(asctime)s - %(message)s")
     else:
         level = logging.INFO
-        formatter = logging.Formatter('%(message)s')
+        formatter = logging.Formatter("%(message)s")
 
     console = logging.StreamHandler()
     console.setFormatter(formatter)
@@ -63,18 +51,18 @@ def _setup_logging(debug=False):
 
 def _verify_platform_support():
     """Determine platform and kernel version support for sysfs."""
-    if sys.platform != 'linux':
-        print('error: only linux platform supported')
+    if sys.platform != "linux":
+        print("error: only linux platform supported")
         sys.exit(1)
 
-    major, minor, _ = platform.release().split('.')
+    major, minor, _ = platform.release().split(".")
     if int(major) < 3 or (int(major) == 3 and int(minor) < 6):
-        print('error: at least kernel 3.6 for sysfs support required')
+        print("error: at least kernel 3.6 for sysfs support required")
         sys.exit(1)
 
     major, minor, _ = platform.python_version_tuple()
     if int(major) < 3 or (int(major) == 3 and int(minor) < 5):
-        print('error: at least python 3.5 required')
+        print("error: at least python 3.5 required")
         sys.exit(1)
 
 
@@ -86,13 +74,13 @@ def launch():
 
     if not args.subcommand:
         Discovery(args.data_dir)
-    elif args.subcommand == 'collect':
+    elif args.subcommand == "collect":
         Collect(args.output_dir)
-    elif args.subcommand == 'features':
+    elif args.subcommand == "features":
         print(json.dumps(__features__, indent=4, sort_keys=True))
-    elif args.subcommand == 'version':
+    elif args.subcommand == "version":
         print(__version__)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(launch())

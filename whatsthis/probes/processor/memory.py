@@ -13,18 +13,18 @@ class Memory(Probe):
 
         self.node_index = node_index
         self.path = path
-        self.meminfo = self._sysfs_read(self.path).split('\n')
+        self.meminfo = self._sysfs_read(self.path).split("\n")
 
     @property
     def total(self):
         """TODO."""
-        return self._search_meminfo('MemTotal')
+        return self._search_meminfo("MemTotal")
 
     def _search_meminfo(self, key):
         """TODO."""
         for row in self.meminfo:
             if key in row:
                 # '16180508kB'
-                return ''.join(row.split(' ')[-2:])
+                return "".join(row.split(" ")[-2:])
 
-        return '0kB'
+        return "0kB"

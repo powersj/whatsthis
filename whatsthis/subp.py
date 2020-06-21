@@ -18,20 +18,16 @@ def execute(args, data=None, env=None, shell=False):
         Tuple of stdout, stderr, return code
 
     """
-    args = args.split(' ') if isinstance(args, str) else args
+    args = args.split(" ") if isinstance(args, str) else args
 
-    logging.debug('running %s', args)
+    logging.debug("running %s", args)
     process = subprocess.Popen(
-        args,
-        env=env,
-        shell=shell,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        args, env=env, shell=shell, stdout=subprocess.PIPE, stderr=subprocess.PIPE
     )
 
     (out, err) = process.communicate(data)
-    out = '' if not out else out.rstrip().decode("utf-8")
-    err = '' if not err else err.rstrip().decode("utf-8")
+    out = "" if not out else out.rstrip().decode("utf-8")
+    err = "" if not err else err.rstrip().decode("utf-8")
 
     return Result(out, err, process.returncode)
 
@@ -39,7 +35,7 @@ def execute(args, data=None, env=None, shell=False):
 class Result(str):  # pylint: disable=too-many-ancestors
     """Result Class."""
 
-    def __init__(self, stdout, stderr='', return_code=-1):
+    def __init__(self, stdout, stderr="", return_code=-1):
         """Initialize class."""
         super().__init__()
 

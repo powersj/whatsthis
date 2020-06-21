@@ -32,22 +32,22 @@ from whatsthis.subp import execute
 class Collect:
     """Collect /proc and /sys from a system."""
 
-    def __init__(self, output_dir=''):
+    def __init__(self, output_dir=""):
         """Initialize the collect class.
 
         Args:
             output_dir: directory to place output in (default: current dir)
         """
-        self.tmp_dir = tempfile.mkdtemp(prefix='whatsthis-')
+        self.tmp_dir = tempfile.mkdtemp(prefix="whatsthis-")
 
-        logging.info('starting collection')
-        logging.debug('tempdir: %s', self.tmp_dir)
+        logging.info("starting collection")
+        logging.debug("tempdir: %s", self.tmp_dir)
         self.proc()
         self.sys()
 
-        tar_filename = '%s-%s.tar.gz' % (
+        tar_filename = "%s-%s.tar.gz" % (
             platform.node(),
-            datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
+            datetime.datetime.now().strftime("%Y%m%d-%H%M%S"),
         )
         tar(self.tmp_dir, os.path.join(output_dir, tar_filename))
 
@@ -57,7 +57,7 @@ class Collect:
 
     def proc(self):
         """Collect specific files from /proc."""
-        logging.info('/proc')
+        logging.info("/proc")
 
         for file_path in proc.FILES:
             if not exists(file_path):
@@ -70,17 +70,17 @@ class Collect:
         Requires the use of -noleaf due to the odd behavior of sysfs.
         Cannot assume it acts like any other filesystem.
         """
-        logging.info('/sys')
+        logging.info("/sys")
 
         for sys_path in sys.FILES:
-            result = execute([
-                'find', sys_path, '-noleaf', '-type', 'f', '-perm', '/444'
-            ])
+            result = execute(
+                ["find", sys_path, "-noleaf", "-type", "f", "-perm", "/444"]
+            )
 
-            for file_path in sorted(result.split('\n')):
-                if 'autosuspend_delay_ms' in file_path:
+            for file_path in sorted(result.split("\n")):
+                if "autosuspend_delay_ms" in file_path:
                     continue
-                if 'thermal_zone' in file_path:
+                if "thermal_zone" in file_path:
                     continue
 
                 dd(file_path, os.path.join(self.tmp_dir, file_path[1:]))

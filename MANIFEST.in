@@ -1,1 +1,1 @@
-include LICENSE MANIFEST.in requirements.txt requirements-test.txt tox.ini
+include LICENSE requirements.txt requirements-test.txt

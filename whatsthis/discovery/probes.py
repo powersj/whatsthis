@@ -2,5 +2,5 @@
 """List of enabled probes."""
 
 ENABLED = {
-    'processor': 'Processor',
+    "processor": "Processor",
 }
