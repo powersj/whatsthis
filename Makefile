@@ -1,37 +1,32 @@
 # This file is part of whatsthis. See LICENSE file for license information.
 
-PYTHON = python3
-SETUP  := $(PYTHON) setup.py
-
-.PHONY: build clean install publish source test venv
-
-build:
-	$(SETUP) build
+build: clean
+	python3 setup.py build
 
 clean:
-	$(SETUP) clean
-	rm -rf .coverage .tox .mypy_cache .eggs *.egg-info build dist
+	python3 setup.py clean
+	rm -rf .pytest_cache build dist *.egg-info .coverage 
 	@find . -regex '.*\(__pycache__\|\.py[co]\)' -delete
 
-install:
-	$(SETUP) install
+install: clean
+	pip install -r requirements.txt
+	python3 setup.py install
 
-publish:
+publish: clean
 	rm -rf dist/
-	$(SETUP) sdist
+	python3 setup.py sdist
 	pip install twine
 	twine upload dist/*
 
-source:
-	$(SETUP) sdist
-
 test:
-	$(SETUP) check -r -s
-	tox
+	black --check .
+	flake8 --max-line-length=88 whatsthis setup.py
+	py.test --cov=whatsthis whatsthis
 
 venv:
-	$(PYTHON) -m virtualenv -p /usr/bin/$(PYTHON) venv
-	venv/bin/pip install -Ur requirements.txt
-	venv/bin/pip install -Ur requirements-test.txt
+	python3 -m virtualenv venv
+	venv/bin/pip install -Ur requirements.txt -Ur requirements-test.txt
 	@echo "Now run the following to activate the virtual env:"
 	@echo ". venv/bin/activate"
+
+.PHONY: build clean install publish test venv

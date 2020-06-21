@@ -13,17 +13,17 @@ class Node(Probe):
         """TODO."""
         super().__init__()
 
-        self.index = self._get_index(path, 'node')
+        self.index = self._get_index(path, "node")
         self.path = path
 
     @property
     def cpus(self):
         """TODO."""
-        cpu_glob = '%s/cpu*[0-9]' % self.path
+        cpu_glob = "%s/cpu*[0-9]" % self.path
         return [CPU(self.index, path) for path in self._sysfs_search(cpu_glob)]
 
     @property
     def memory(self):
         """TODO."""
-        path = '%s/meminfo' % self.path
+        path = "%s/meminfo" % self.path
         return Memory(self.index, path)

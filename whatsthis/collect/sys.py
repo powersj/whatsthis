@@ -2,6 +2,6 @@
 """/sys items."""
 
 FILES = [
-    '/sys/block',
-    '/sys/devices/virtual',
+    "/sys/block",
+    "/sys/devices/virtual",
 ]

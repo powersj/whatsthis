@@ -1,13 +1,13 @@
 language: python
-dist: xenial
+dist: bionic
 python:
-  - 3.5
   - 3.6
   - 3.7
+  - 3.8
 install:
   - pip install -r requirements.txt -r requirements-test.txt
 script:
-  - tox
+  - make test
   - python setup.py install
   - whatsthis version
   - whatsthis features
