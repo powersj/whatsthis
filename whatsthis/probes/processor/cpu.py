@@ -36,9 +36,9 @@ class CPU(Probe):
         """TODO."""
         cache = ""
         for level in self.cache:
-            cache += " %s" % level
+            cache += "%s " % level
 
-        return "cpu %s: %s/%s/%s%s" % (
+        return "cpu %s: %s/%s/%s %s" % (
             self.index,
             self.topology["socket"],
             self.topology["core"],
