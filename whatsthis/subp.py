@@ -32,7 +32,7 @@ def execute(args, data=None, env=None, shell=False):
     return Result(out, err, process.returncode)
 
 
-class Result(str):  # pylint: disable=too-many-ancestors
+class Result(str):
     """Result Class."""
 
     def __init__(self, stdout, stderr="", return_code=-1):
@@ -60,6 +60,6 @@ class Result(str):  # pylint: disable=too-many-ancestors
         return not self.ok
 
     @property
-    def ok(self):  # pylint: disable=invalid-name
+    def ok(self):
         """Return boolean from return_code."""
         return not bool(self.return_code)

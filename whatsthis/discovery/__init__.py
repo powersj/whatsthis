@@ -11,7 +11,7 @@ import logging
 from whatsthis.discovery import probes
 
 
-class Discovery:  # pylint: disable=R0903
+class Discovery:
     """Do the discovering."""
 
     def __init__(self, data_dir=None):
