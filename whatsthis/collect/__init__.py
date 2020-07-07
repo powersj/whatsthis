@@ -37,7 +37,7 @@ COMMANDS = {
     "lsmem": "lsmem",
     "lspci": "lspci",
     "lspci -vv": "lspci_vv",
-    "blkid -o export": "blkid"
+    "blkid -o export": "blkid",
 }
 
 PROC_FILES = [
@@ -89,12 +89,12 @@ class Collect:
         self.proc()
         self.sys()
 
-        os.makedirs(os.path.join(self.tmp_dir, 'cmd'))
+        os.makedirs(os.path.join(self.tmp_dir, "cmd"))
         for command, filename in COMMANDS.items():
             print("running: %s" % command)
             result = execute(command)
 
-            output_file = os.path.join(self.tmp_dir, 'cmd', filename)
+            output_file = os.path.join(self.tmp_dir, "cmd", filename)
             with open(output_file, "w") as file_out:
                 file_out.write(result.stdout)
 
@@ -131,21 +131,21 @@ class Collect:
             )
 
             for file_path in sorted(result.split("\n")):
-                if 'autosuspend_delay_ms' in file_path:
+                if "autosuspend_delay_ms" in file_path:
                     continue
-                if 'kernel/slab' in file_path:
+                if "kernel/slab" in file_path:
                     continue
-                if 'firmware/efi' in file_path:
+                if "firmware/efi" in file_path:
                     continue
-                if 'sys/module' in file_path:
+                if "sys/module" in file_path:
                     continue
-                if 'thermal/thermal_zone' in file_path:
+                if "thermal/thermal_zone" in file_path:
                     continue
-                if 'firmware/acpi' in file_path:
+                if "firmware/acpi" in file_path:
                     continue
-                if 'devices/virtual/thermal' in file_path:
+                if "devices/virtual/thermal" in file_path:
                     continue
-                if 'sys/devices/platform' in file_path:
+                if "sys/devices/platform" in file_path:
                     continue
 
                 file_stat = os.stat(file_path)
