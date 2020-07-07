@@ -147,6 +147,8 @@ class Collect:
                     continue
                 if "sys/devices/platform" in file_path:
                     continue
+                if "cgroup" in file_path:
+                    continue
 
                 file_stat = os.stat(file_path)
                 if oct(file_stat.st_mode)[-1:] == 0:
