@@ -67,9 +67,7 @@ PROC_FILES = [
     "/proc/zoneinfo",
 ]
 
-SYS_FILES = [
-    "/sys",
-]
+SYS_FILES = ["/sys"]
 
 
 class Collect:
