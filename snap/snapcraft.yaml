@@ -1,10 +1,14 @@
-name: whatsthis  # check to see if it's available
-version: git
-summary: This is a Python 3 based CLI app to determine what a system is. # 79 char long summary
+name: whatsthis 
+adopt-info: whatsthis
+summary: This is a Python 3 based CLI app to determine what a system is.
 description: | 
         Am I in a cloud, on a container, or just plain metal? 
-grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: strict # use 'strict' once you have the right plugs
+
+license: GPL-3.0
+
+base: core18
+grade: stable
+confinement: strict 
 
 apps:
   whatsthis:
@@ -28,6 +32,10 @@ parts:
     plugin: python
     python-version: python3
     
+    override-pull: |
+      snapcraftctl pull
+      snapcraftctl set-version "$(git describe --tags | sed 's/^v//' | cut -d "-" -f1)"
+      
     build-packages:
       - python3
       
