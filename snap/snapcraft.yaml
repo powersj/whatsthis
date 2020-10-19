@@ -1,8 +1,10 @@
 name: whatsthis 
-adopt-info: whatsthis
+version: git
+version-script: git rev-parse --short HEAD
+
 summary: This is a Python 3 based CLI app to determine what a system is.
 description: | 
-        Am I in a cloud, on a container, or just plain metal? 
+  Am I in a cloud, on a container, or just plain metal? 
 
 license: GPL-3.0
 
@@ -32,10 +34,6 @@ parts:
     plugin: python
     python-version: python3
     
-    override-pull: |
-      snapcraftctl pull
-      snapcraftctl set-version "$(git describe --tags | sed 's/^v//' | cut -d "-" -f1)"
-      
     build-packages:
       - python3
       
