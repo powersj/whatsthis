@@ -1,32 +1,24 @@
-# This file is part of whatsthis. See LICENSE file for license information.
+all: build
 
-build: clean
-	python3 setup.py build
+build:
+	go build -o whatsthis ./cmd/whatsthis
 
 clean:
-	python3 setup.py clean
-	rm -rf .pytest_cache build dist *.egg-info .coverage 
-	@find . -regex '.*\(__pycache__\|\.py[co]\)' -delete
+	@rm -f $(BINNAME)
+	@rm -f coverage.out
+	@rm -f go.sum
 
-install: clean
-	pip install -r requirements.txt
-	python3 setup.py install
+docs:
+	echo "View docs at: http://localhost:6060/pkg/whatsthis/"
+	godoc -http=localhost:6060
 
-publish: clean
-	rm -rf dist/
-	python3 setup.py sdist
-	pip install twine
-	twine upload dist/*
+lint:
+	golangci-lint run
 
 test:
-	black --check .
-	flake8 --max-line-length=88 whatsthis setup.py
-	py.test --cov=whatsthis whatsthis
+	go test -cover -coverprofile=coverage.out  whatsthis/pkg/...
 
-venv:
-	python3 -m virtualenv venv
-	venv/bin/pip install -Ur requirements.txt -Ur requirements-test.txt
-	@echo "Now run the following to activate the virtual env:"
-	@echo ". venv/bin/activate"
+test-coverage: test
+	go tool cover -html=coverage.out
 
-.PHONY: build clean install publish test venv
+.PHONY: all build clean docs lint test test-coverage
