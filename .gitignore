@@ -1,24 +1,3 @@
-# This file is part of whatsthis. See LICENSE file for license information.
-
-# Python build and distribute items
-*.egg-info/
-*.pyc
-.eggs
-__pycache__
-build
-dist
-venv
-
-# Testing items
-.coverage
-.mypy_cache
-.noseids
-.tox
-cover
-htmlcov
-
-# Collect subcommand
-*.tar.gz
-
-# Snap
-*.snap
+coverage.out
+go.sum
+/whatsthis

@@ -1,13 +1,12 @@
-language: python
+language: go
 dist: bionic
-python:
-  - 3.6
-  - 3.7
-  - 3.8
+go:
+  - 1.14.x
+  - 1.15.x
 install:
-  - pip install -r requirements.txt -r requirements-test.txt
+  - go get -t -v ./...
+  - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ${TRAVIS_HOME}/bin v1.33.0
 script:
+  - make build
+  - make lint
   - make test
-  - python setup.py install
-  - whatsthis version
-  - whatsthis features
