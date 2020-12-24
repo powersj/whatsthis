@@ -3,8 +3,8 @@ package virt
 import (
 	"fmt"
 
-	"whatsthis/internal/cpuid"
-	"whatsthis/internal/util"
+	"github.com/powersj/whatsthis/internal/cpuid"
+	"github.com/powersj/whatsthis/internal/util"
 )
 
 // Probe struct for virt. Used to store the results of the probe and the

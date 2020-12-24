@@ -23,7 +23,7 @@ release-snapshot:
 	goreleaser --rm-dist --skip-publish --snapshot
 
 test:
-	go test -cover -coverprofile=coverage.out  whatsthis/pkg/...
+	go test -cover -coverprofile=coverage.out  ./...
 
 test-coverage: test
 	go tool cover -html=coverage.out

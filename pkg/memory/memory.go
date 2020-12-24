@@ -3,9 +3,9 @@ package memory
 import (
 	"fmt"
 
-	"whatsthis/internal/filesystem"
-	"whatsthis/internal/units"
-	"whatsthis/internal/util"
+	"github.com/powersj/whatsthis/internal/filesystem"
+	"github.com/powersj/whatsthis/internal/units"
+	"github.com/powersj/whatsthis/internal/util"
 )
 
 // Probe struct for memory.

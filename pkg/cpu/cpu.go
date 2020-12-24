@@ -6,8 +6,8 @@ import (
 	"runtime"
 	"strings"
 
-	"whatsthis/internal/filesystem"
-	"whatsthis/internal/util"
+	"github.com/powersj/whatsthis/internal/filesystem"
+	"github.com/powersj/whatsthis/internal/util"
 )
 
 // Probe struct for CPUs.

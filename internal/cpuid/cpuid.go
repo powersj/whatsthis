@@ -3,7 +3,7 @@ package cpuid
 import (
 	"bytes"
 
-	"whatsthis/internal/util"
+	"github.com/powersj/whatsthis/internal/util"
 )
 
 // Probe struct for cpuid.
