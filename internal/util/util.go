@@ -26,3 +26,14 @@ func SliceContainsString(s []string, str string) bool {
 
 	return false
 }
+
+// SliceContainsInt returns if a slice contains a particular string
+func SliceContainsInt(s []int, num int) bool {
+	for _, value := range s {
+		if value == num {
+			return true
+		}
+	}
+
+	return false
+}

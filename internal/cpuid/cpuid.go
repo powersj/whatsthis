@@ -24,8 +24,7 @@ func New() (*Probe, error) {
 // Probe the system
 // https://lwn.net/Articles/301888/
 func (p *Probe) probe() error {
-	_, ebx, ecx, edx := cpuid(0x40000000, 0)
-	p.VendorID = int32sToString(ebx, ecx, edx)
+	p.VendorID = p.ReadCPUID()
 
 	return nil
 }
@@ -39,16 +38,6 @@ func (p *Probe) String() string {
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }
-
-// IsHypervisor returns whether the hypervisor present bit is set
-func (p *Probe) IsHypervisor() bool {
-	var hypervisorPresent uint32 = 0x80000000
-	_, _, ecx, _ := cpuid(0x1, 0)
-	return (ecx & hypervisorPresent) == hypervisorPresent
-}
-
-// cpuid assembly to get the CPUID low level leaf values.
-func cpuid(arg1, arg2 uint32) (eax, ebx, ecx, edx uint32)
 
 // int32sToString converts the CPUID registers into a string
 func int32sToString(args ...uint32) string {
