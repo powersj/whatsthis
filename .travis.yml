@@ -1,12 +1,12 @@
 language: go
-dist: bionic
 go:
   - 1.14.x
   - 1.15.x
+dist: bionic
 install:
   - go get -t -v ./...
   - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ${TRAVIS_HOME}/bin v1.33.0
 script:
-  - make build
   - make lint
+  - make build
   - make test
