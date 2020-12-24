@@ -1,3 +1,5 @@
+// +build amd64
+
 #include "textflag.h"
 
 // func cpuid(arg1, arg2 uint32) (eax, ebx, ecx, edx uint32)
