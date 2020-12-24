@@ -3,6 +3,7 @@ package cpu
 import (
 	"fmt"
 	"regexp"
+	"runtime"
 	"strings"
 
 	"whatsthis/internal/filesystem"
@@ -35,9 +36,13 @@ func New() (*Probe, error) {
 
 // Probe the system
 func (p *Probe) probe() error {
-	var cpuinfo string = p.proc.CPUInfo()
-	rex := regexp.MustCompile(`(?:model name.*: )(.*)`)
-	p.Model = rex.FindStringSubmatch(cpuinfo)[1]
+	if runtime.GOARCH == "amd64" {
+		var cpuinfo string = p.proc.CPUInfo()
+		rex := regexp.MustCompile(`(?:model name.*: )(.*)`)
+		p.Model = rex.FindStringSubmatch(cpuinfo)[1]
+	} else {
+		p.Model = "ARMv8"
+	}
 
 	p.NumCores = len(p.sys.CPUCoreList())
 	p.NumThreads = len(p.sys.ListCPU())
@@ -78,17 +83,16 @@ func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }
 
-// numSockets returns the number of sockets in the system because these are
-// indexed at zero, the function adds one to the value.
+// numSockets returns the number of sockets in the system
 func (p *Probe) numSockets() int {
 	var cpuSocketMap map[string]int = p.sys.CPUSocketMap()
 
-	var maxValue int = 0
+	var uniqueSockets []int = make([]int, 0)
 	for _, socketID := range cpuSocketMap {
-		if socketID > maxValue {
-			maxValue = socketID
+		if !util.SliceContainsInt(uniqueSockets, socketID) {
+			uniqueSockets = append(uniqueSockets, socketID)
 		}
 	}
 
-	return maxValue + 1
+	return len(uniqueSockets)
 }
