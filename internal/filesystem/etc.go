@@ -1,7 +1,7 @@
 package filesystem
 
 import (
-	"whatsthis/pkg/file"
+	"whatsthis/internal/file"
 )
 
 // Etc represents the /etc filesystem

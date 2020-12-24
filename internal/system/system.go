@@ -3,6 +3,7 @@ package system
 import (
 	"fmt"
 
+	"whatsthis/internal/util"
 	"whatsthis/pkg/cloud"
 	"whatsthis/pkg/container"
 	"whatsthis/pkg/cpu"
@@ -11,7 +12,6 @@ import (
 	"whatsthis/pkg/network"
 	"whatsthis/pkg/platform"
 	"whatsthis/pkg/storage"
-	"whatsthis/pkg/util"
 	"whatsthis/pkg/virt"
 )
 

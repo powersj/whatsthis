@@ -6,8 +6,8 @@ import (
 	"runtime"
 	"strings"
 
-	"whatsthis/pkg/filesystem"
-	"whatsthis/pkg/util"
+	"whatsthis/internal/filesystem"
+	"whatsthis/internal/util"
 )
 
 // Probe struct for distro.
