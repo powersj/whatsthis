@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"whatsthis/internal/file"
-	"whatsthis/internal/system"
+	"github.com/powersj/whatsthis/internal/file"
+	"github.com/powersj/whatsthis/internal/system"
 
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"

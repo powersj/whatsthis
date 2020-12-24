@@ -3,8 +3,8 @@ package filesystem
 import (
 	"path"
 
-	"whatsthis/internal/file"
-	"whatsthis/internal/util"
+	"github.com/powersj/whatsthis/internal/file"
+	"github.com/powersj/whatsthis/internal/util"
 )
 
 // Sys represents the /sys filesystem

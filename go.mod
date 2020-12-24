@@ -1,4 +1,4 @@
-module whatsthis
+module github.com/powersj/whatsthis
 
 go 1.14
 

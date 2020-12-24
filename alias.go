@@ -1,15 +1,15 @@
 package whatsthis
 
 import (
-	"whatsthis/pkg/cloud"
-	"whatsthis/pkg/container"
-	"whatsthis/pkg/cpu"
-	"whatsthis/pkg/distro"
-	"whatsthis/pkg/memory"
-	"whatsthis/pkg/network"
-	"whatsthis/pkg/platform"
-	"whatsthis/pkg/storage"
-	"whatsthis/pkg/virt"
+	"github.com/powersj/whatsthis/pkg/cloud"
+	"github.com/powersj/whatsthis/pkg/container"
+	"github.com/powersj/whatsthis/pkg/cpu"
+	"github.com/powersj/whatsthis/pkg/distro"
+	"github.com/powersj/whatsthis/pkg/memory"
+	"github.com/powersj/whatsthis/pkg/network"
+	"github.com/powersj/whatsthis/pkg/platform"
+	"github.com/powersj/whatsthis/pkg/storage"
+	"github.com/powersj/whatsthis/pkg/virt"
 )
 
 // CloudProbe alias for cloud.Probe

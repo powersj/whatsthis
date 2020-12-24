@@ -1,7 +1,7 @@
 package filesystem
 
 import (
-	"whatsthis/internal/file"
+	"github.com/powersj/whatsthis/internal/file"
 )
 
 // Etc represents the /etc filesystem

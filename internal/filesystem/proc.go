@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"whatsthis/internal/file"
+	"github.com/powersj/whatsthis/internal/file"
 )
 
 // Proc represents the /proc filesystem
