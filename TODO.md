@@ -4,25 +4,19 @@ This is a collection of future ideas for the project.
 
 ## Next
 
-* GitHub CI
-* GoReleaser: https://goreleaser.com/intro/
-* Docs: https://pkg.go.dev/
-
-## Next + 1
-
 * Unit testing
 * Examples: include how to use this to query specific subsystems inside a
   go-lang project
 * Documentation: for virt, cloud, container information
 
-## Next + 2
+## Next + 1
 
-* arm64 support
+* Greater arm64 support
 * PCI IDs for network and storage devices?
 * whatsthis-collect: enable basic functionality to start capturing required
   files.
 
-## Next + 3
+## Next + 2
 
 * Custom source directory
 * *BSD support
