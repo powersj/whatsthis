@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"whatsthis/internal/filesystem"
-	"whatsthis/internal/util"
+	"github.com/powersj/whatsthis/internal/filesystem"
+	"github.com/powersj/whatsthis/internal/util"
 )
 
 // Probe struct for containres. Used to store the results of the probe and the

@@ -3,8 +3,8 @@ package platform
 import (
 	"fmt"
 
-	"whatsthis/internal/filesystem"
-	"whatsthis/internal/util"
+	"github.com/powersj/whatsthis/internal/filesystem"
+	"github.com/powersj/whatsthis/internal/util"
 )
 
 // Probe struct for platform. Captures the BIOS and Board values.

@@ -5,7 +5,7 @@ import (
 	"os"
 	"runtime"
 
-	cmd "whatsthis/cmd/whatsthis/cmd"
+	cmd "github.com/powersj/whatsthis/cmd/whatsthis/cmd"
 )
 
 func main() {
