@@ -57,13 +57,13 @@ cpu: AMD Ryzen 9 5950X 16-Core Processor with 16 cores (32 threads) on 1 socket
 memory: 31.3G
 storage:
 - nvme0n1 931.5G
-- nvme0n1p1 512M EFI System Partition
-- nvme0n1p2 931G
+  - nvme0n1p1 512M EFI System Partition
+  - nvme0n1p2 931G
 - nvme1n1 1.9T
-- nvme1n1p4 498M
-- nvme1n1p2 16M Microsoft reserved partition
-- nvme1n1p3 1.9T Basic data partition
-- nvme1n1p1 100M EFI system partition
+  - nvme1n1p4 498M
+  - nvme1n1p2 16M Microsoft reserved partition
+  - nvme1n1p3 1.9T Basic data partition
+  - nvme1n1p1 100M EFI system partition
 network:
 - adapters:
   - enp6s0 24:4b:fe:9a:a4:fa 1000 mtu 9000 (igc)
