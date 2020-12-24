@@ -5,8 +5,8 @@ This is a collection of future ideas for the project.
 ## Next
 
 * GitHub CI
-* GitHub Builds
-* Auto-build of docs
+* GoReleaser: https://goreleaser.com/intro/
+* Docs: https://pkg.go.dev/
 
 ## Next + 1
 
