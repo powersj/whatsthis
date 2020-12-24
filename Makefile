@@ -4,9 +4,10 @@ build:
 	go build -o whatsthis ./cmd/whatsthis
 
 clean:
-	@rm -f $(BINNAME)
-	@rm -f coverage.out
-	@rm -f go.sum
+	rm -f whatsthis
+	rm -f coverage.out
+	rm -f go.sum
+	rm -rf dist
 
 docs:
 	echo "View docs at: http://localhost:6060/pkg/whatsthis/"
@@ -14,6 +15,12 @@ docs:
 
 lint:
 	golangci-lint run
+
+release:
+	goreleaser
+
+release-snapshot:
+	goreleaser --rm-dist --skip-publish --snapshot
 
 test:
 	go test -cover -coverprofile=coverage.out  whatsthis/pkg/...
