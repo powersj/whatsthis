@@ -3,8 +3,9 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"whatsthis/pkg/file"
-	"whatsthis/pkg/system"
+
+	"whatsthis/internal/file"
+	"whatsthis/internal/system"
 
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
@@ -12,7 +13,7 @@ import (
 )
 
 const (
-	version = "20.1-beta"
+	version = "v20.1"
 )
 
 var (

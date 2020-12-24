@@ -6,8 +6,8 @@ import (
 	"path"
 	"strings"
 
-	"whatsthis/pkg/filesystem"
-	"whatsthis/pkg/util"
+	"whatsthis/internal/filesystem"
+	"whatsthis/internal/util"
 )
 
 // Probe struct for storage. Splits adapters by physical adapters, virtual

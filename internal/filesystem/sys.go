@@ -3,8 +3,8 @@ package filesystem
 import (
 	"path"
 
-	"whatsthis/pkg/file"
-	"whatsthis/pkg/util"
+	"whatsthis/internal/file"
+	"whatsthis/internal/util"
 )
 
 // Sys represents the /sys filesystem

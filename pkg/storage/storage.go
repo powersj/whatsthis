@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"whatsthis/pkg/filesystem"
-	"whatsthis/pkg/units"
-	"whatsthis/pkg/util"
+	"whatsthis/internal/filesystem"
+	"whatsthis/internal/units"
+	"whatsthis/internal/util"
 )
 
 // Probe struct for storage. Captures disks, which capture partitions.

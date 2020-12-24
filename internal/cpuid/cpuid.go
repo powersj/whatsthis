@@ -3,7 +3,7 @@ package cpuid
 import (
 	"bytes"
 
-	"whatsthis/pkg/util"
+	"whatsthis/internal/util"
 )
 
 // Probe struct for cpuid.
