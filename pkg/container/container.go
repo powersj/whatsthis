@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"whatsthis/pkg/filesystem"
-	"whatsthis/pkg/util"
+	"whatsthis/internal/filesystem"
+	"whatsthis/internal/util"
 )
 
 // Probe struct for containres. Used to store the results of the probe and the

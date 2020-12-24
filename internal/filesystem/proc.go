@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"whatsthis/pkg/file"
+	"whatsthis/internal/file"
 )
 
 // Proc represents the /proc filesystem

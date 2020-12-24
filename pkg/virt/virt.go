@@ -3,8 +3,8 @@ package virt
 import (
 	"fmt"
 
-	"whatsthis/pkg/cpuid"
-	"whatsthis/pkg/util"
+	"whatsthis/internal/cpuid"
+	"whatsthis/internal/util"
 )
 
 // Probe struct for virt. Used to store the results of the probe and the

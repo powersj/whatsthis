@@ -1,7 +1,7 @@
 package filesystem
 
 import (
-	"whatsthis/pkg/file"
+	"whatsthis/internal/file"
 )
 
 // Run represents the /run filesystem

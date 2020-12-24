@@ -3,8 +3,8 @@ package platform
 import (
 	"fmt"
 
-	"whatsthis/pkg/filesystem"
-	"whatsthis/pkg/util"
+	"whatsthis/internal/filesystem"
+	"whatsthis/internal/util"
 )
 
 // Probe struct for platform. Captures the BIOS and Board values.

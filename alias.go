@@ -4,7 +4,6 @@ import (
 	"whatsthis/pkg/cloud"
 	"whatsthis/pkg/container"
 	"whatsthis/pkg/cpu"
-	"whatsthis/pkg/cpuid"
 	"whatsthis/pkg/distro"
 	"whatsthis/pkg/memory"
 	"whatsthis/pkg/network"
@@ -21,9 +20,6 @@ type ContainerProbe = container.Probe
 
 // CPUProbe alias for cpu.Probe
 type CPUProbe = cpu.Probe
-
-// CPUIDProbe alias for cpuid.Probe
-type CPUIDProbe = cpuid.Probe
 
 //DistroProbe alias for distro.Probe
 type DistroProbe = distro.Probe
@@ -51,9 +47,6 @@ var Container = container.New
 
 // CPU alias for new struct
 var CPU = cpu.New
-
-// CPUID alias for new struct
-var CPUID = cpuid.New
 
 // Distro alias for new struct
 var Distro = distro.New
