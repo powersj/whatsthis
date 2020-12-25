@@ -2,7 +2,7 @@
 
 package cpuid
 
-// ReadCPUID placeholder for arm64
+// ReadCPUID placeholder for arm64.
 func (p *Probe) ReadCPUID() string {
 	return ""
 }

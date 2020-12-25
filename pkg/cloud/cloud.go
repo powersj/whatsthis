@@ -35,9 +35,9 @@ func New() (*Probe, error) {
 	return probe, nil
 }
 
-// Probe the system
+// Probe the system.
 func (p *Probe) probe() error {
-	var clouds = map[string]func() bool{
+	clouds := map[string]func() bool{
 		"alibaba":      p.Alibaba,
 		"aws":          p.AWS,
 		"azure":        p.Azure,
@@ -65,7 +65,7 @@ func (p *Probe) probe() error {
 	return nil
 }
 
-// String representation of the struct
+// String representation of the struct.
 func (p *Probe) String() string {
 	if p.Name == "" {
 		return "cloud: not detected"
@@ -74,7 +74,7 @@ func (p *Probe) String() string {
 	return fmt.Sprintf("cloud: %s", p.Name)
 }
 
-// JSON representation of the struct
+// JSON representation of the struct.
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }
@@ -84,10 +84,10 @@ func (p *Probe) Alibaba() bool {
 	return p.sys.ProductName() == "Alibaba Cloud ECS"
 }
 
-// AWS detects if a system is on Amazon Web Services (AWS). Baremetal
-// and Nitro (KVM) based instances will have "Amazon EC2" as the sys_vendor.
-// The older Xen based systems (e.g t2) will show Xen. To further identify
-// these systems the Hypervisor UUID will start with "ec2"
+// AWS detects if a system is on Amazon Web Services (AWS).
+// Baremetal and Nitro (KVM) based instances will have "Amazon EC2" as the
+// sys_vendor. The older Xen based systems (e.g t2) will show Xen. To further
+// identify these systems the Hypervisor UUID will start with "ec2".
 //
 // https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/identify_ec2_instances.html
 func (p *Probe) AWS() bool {

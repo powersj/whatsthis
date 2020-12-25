@@ -7,20 +7,20 @@ import (
 	"github.com/powersj/whatsthis/internal/util"
 )
 
-// Sys represents the /sys filesystem
+// Sys represents the /sys filesystem.
 type Sys struct{}
 
-// BIOSDate read from /sys/class/dmi/id
+// BIOSDate read from /sys/class/dmi/id.
 func (*Sys) BIOSDate() string {
 	return file.Read("/sys/class/dmi/id/bios_date")
 }
 
-// BIOSVendor read from /sys/class/dmi/id
+// BIOSVendor read from /sys/class/dmi/id.
 func (*Sys) BIOSVendor() string {
 	return file.Read("/sys/class/dmi/id/bios_vendor")
 }
 
-// BIOSVersion read from /sys/class/dmi/id
+// BIOSVersion read from /sys/class/dmi/id.
 func (*Sys) BIOSVersion() string {
 	return file.Read("/sys/class/dmi/id/bios_version")
 }
@@ -32,23 +32,23 @@ func (s *Sys) BlockSize(target string) int64 {
 	return file.ReadInt64(path.Join(target, "size")) * 512
 }
 
-// BoardName read from /sys/class/dmi/id/
+// BoardName read from /sys/class/dmi/id/.
 func (*Sys) BoardName() string {
 	return file.Read("/sys/class/dmi/id/board_name")
 }
 
-// BoardVendor read from /sys/class/dmi/id/
+// BoardVendor read from /sys/class/dmi/id/.
 func (*Sys) BoardVendor() string {
 	return file.Read("/sys/class/dmi/id/board_vendor")
 }
 
-// ChassisAssetTag read from /sys/class/dmi/id/
+// ChassisAssetTag read from /sys/class/dmi/id/.
 func (*Sys) ChassisAssetTag() string {
 	return file.Read("/sys/class/dmi/id/chassis_asset_tag")
 }
 
 // CPUCoreList returns a unique list of CPUs with the same physical core
-// file returns a list of cores with the same physical core (e.g. 0, or 0,7)
+// file returns a list of cores with the same physical core (e.g. 0, or 0,7).
 func (s *Sys) CPUCoreList() []string {
 	var cpuCoreList []string
 
@@ -62,7 +62,7 @@ func (s *Sys) CPUCoreList() []string {
 	return cpuCoreList
 }
 
-// CPUSocketMap returns a map of CPU to Socket
+// CPUSocketMap returns a map of CPU to Socket.
 func (s *Sys) CPUSocketMap() map[string]int {
 	var cpuSocketMap map[string]int = make(map[string]int)
 
@@ -73,62 +73,62 @@ func (s *Sys) CPUSocketMap() map[string]int {
 	return cpuSocketMap
 }
 
-// HypervisorType read from /sys/hypervisor/
+// HypervisorType read from /sys/hypervisor/.
 func (*Sys) HypervisorType() string {
 	return file.Read("/sys/hypervisor/type")
 }
 
-// HypervisorUUID read from /sys/hypervisor/
+// HypervisorUUID read from /sys/hypervisor/.
 func (*Sys) HypervisorUUID() string {
 	return file.Read("/sys/hypervisor/uuid")
 }
 
-// ListBlock returns lists all block devices in /sys
+// ListBlock returns lists all block devices in /sys.
 func (s *Sys) ListBlock() []string {
 	return file.ListDirsWithRegex("/sys/class/block", `.*`)
 }
 
-// ListCPU returns a list of all CPUs in /sys
+// ListCPU returns a list of all CPUs in /sys.
 func (s *Sys) ListCPU() []string {
 	return file.ListDirsWithRegex("/sys/devices/system/cpu", `cpu\d+`)
 }
 
-// ListNetwork returns a list of all network devices in /sys
+// ListNetwork returns a list of all network devices in /sys.
 func (s *Sys) ListNetwork() []string {
 	return file.ListDirsWithRegex("/sys/class/net", `.*`)
 }
 
-// ProductName read from /sys/class/dmi/id/
+// ProductName read from /sys/class/dmi/id/.
 func (*Sys) ProductName() string {
 	return file.Read("/sys/class/dmi/id/product_name")
 }
 
-// ProductSerial read from /sys/class/dmi/id/
+// ProductSerial read from /sys/class/dmi/id/.
 func (*Sys) ProductSerial() string {
 	return file.Read("/sys/class/dmi/id/product_serial")
 }
 
-// ReadInt returns
+// ReadInt returns an int from a file.
 func (*Sys) ReadInt(target string) int {
 	return file.ReadInt(target)
 }
 
-// ReadInt64 TODO
+// ReadInt64 returns a in64 from a file.
 func (*Sys) ReadInt64(target string) int64 {
 	return file.ReadInt64(target)
 }
 
-// ReadString TODO
+// ReadString returns a string from a file.
 func (*Sys) ReadString(target string) string {
 	return file.Read(target)
 }
 
-// SysVendor read from /sys/class/dmi/id/
+// SysVendor read from /sys/class/dmi/id/.
 func (*Sys) SysVendor() string {
 	return file.Read("/sys/class/dmi/id/sys_vendor")
 }
 
-// UEvent reads from the target's uevent file and parses it
+// UEvent reads from the target's uevent file and parses it.
 func (s *Sys) UEvent(target string) map[string]string {
 	return file.ParseKeyValue(path.Join(target, "uevent"), "=")
 }

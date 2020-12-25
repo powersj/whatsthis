@@ -7,26 +7,26 @@ import (
 	"github.com/powersj/whatsthis/internal/file"
 )
 
-// Proc represents the /proc filesystem
+// Proc represents the /proc filesystem.
 type Proc struct{}
 
-// CGroup read from /proc/self/cgroup
+// CGroup read from /proc/self/cgroup.
 func (*Proc) CGroup() string {
 	return file.Read("/proc/self/cgroup")
 }
 
-// CPUInfo read from /proc/cpuinfo
+// CPUInfo read from /proc/cpuinfo.
 func (*Proc) CPUInfo() string {
 	return file.Read("/proc/cpuinfo")
 }
 
-// Environ read from /proc/1/environ
+// Environ read from /proc/1/environ.
 func (*Proc) Environ() string {
 	return file.Read("/proc/1/environ")
 }
 
 // MemInfo read from /proc/meminfo, strip "kB" from endings and convert
-// to int64
+// to int64.
 func (*Proc) MemInfo() map[string]int64 {
 	var parsedMap map[string]string = file.ParseKeyValue("/proc/meminfo", ":")
 
@@ -39,17 +39,17 @@ func (*Proc) MemInfo() map[string]int64 {
 	return memInfoMap
 }
 
-// OSRelease read from /proc/sys/kernel/osrelease
+// OSRelease read from /proc/sys/kernel/osrelease.
 func (*Proc) OSRelease() string {
 	return file.Read("/proc/sys/kernel/osrelease")
 }
 
-// Procinfo read from /proc/procinfo
+// Procinfo read from /proc/procinfo.
 func (*Proc) Procinfo() string {
 	return file.Read("/proc/procinfo")
 }
 
-// Version read from /proc/version
+// Version read from /proc/version.
 func (*Proc) Version() string {
 	return file.Read("/proc/version")
 }

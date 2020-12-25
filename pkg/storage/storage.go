@@ -47,7 +47,7 @@ func New() (*Probe, error) {
 	return probe, nil
 }
 
-// Probe the system
+// Probe the system.
 func (p *Probe) probe() error {
 	var disks []Disk
 
@@ -78,7 +78,7 @@ func (p *Probe) probe() error {
 	return nil
 }
 
-// String representation of the struct
+// String representation of the struct.
 func (p *Probe) String() string {
 	var result strings.Builder
 	result.WriteString("storage:\n")
@@ -89,11 +89,11 @@ func (p *Probe) String() string {
 		}
 	}
 
-	// Convert to string and remove last new line
+	// Convert to string and remove last new line.
 	return strings.TrimSuffix(result.String(), "\n")
 }
 
-// JSON representation of the struct
+// JSON representation of the struct.
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }
