@@ -13,7 +13,7 @@ func main() {
 	var arch string = runtime.GOARCH
 
 	if distro != "linux" {
-		fmt.Println("Executable not implimented for " + distro)
+		fmt.Println("Executable not implemented for " + distro)
 		os.Exit(1)
 	}
 
