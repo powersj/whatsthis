@@ -34,7 +34,7 @@ func New() (*Probe, error) {
 	return probe, nil
 }
 
-// Probe the system
+// Probe the system.
 func (p *Probe) probe() error {
 	p.Arch = runtime.GOARCH
 
@@ -51,14 +51,14 @@ func (p *Probe) probe() error {
 	return nil
 }
 
-// String representation of the struct
+// String representation of the struct.
 func (p *Probe) String() string {
 	return fmt.Sprintf(
 		"distro: %s (%s)\nkernel: %s", p.PrettyName, p.Arch, p.Kernel,
 	)
 }
 
-// JSON representation of the struct
+// JSON representation of the struct.
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }

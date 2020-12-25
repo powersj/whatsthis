@@ -1,0 +1,20 @@
+linters:
+  enable:
+    - dupl
+    - errorlint
+    - funlen
+    - gocritic
+    - godot
+    - gofumpt
+    - goimports
+    - gomnd
+    - gosec
+    - misspell
+    - whitespace
+    - wrapcheck
+linters-settings:
+  lll:
+    line-length: 80
+    tab-width: 4
+  misspell:
+    locale: US

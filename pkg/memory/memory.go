@@ -28,7 +28,7 @@ func New() (*Probe, error) {
 	return probe, nil
 }
 
-// Probe the system
+// Probe the system.
 func (p *Probe) probe() error {
 	var memInfoMap map[string]int64 = p.proc.MemInfo()
 
@@ -38,12 +38,12 @@ func (p *Probe) probe() error {
 	return nil
 }
 
-// String representation of the struct
+// String representation of the struct.
 func (p *Probe) String() string {
 	return fmt.Sprintf("memory: %s", p.Total)
 }
 
-// JSON representation of the struct
+// JSON representation of the struct.
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }

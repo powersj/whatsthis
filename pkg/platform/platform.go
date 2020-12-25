@@ -40,7 +40,7 @@ func New() (*Probe, error) {
 	return probe, nil
 }
 
-// Probe the system
+// Probe the system.
 func (p *Probe) probe() error {
 	p.BIOS = BIOS{
 		Date:    p.sys.BIOSDate(),
@@ -56,7 +56,7 @@ func (p *Probe) probe() error {
 	return nil
 }
 
-// String representation of the struct
+// String representation of the struct.
 func (p *Probe) String() string {
 	return fmt.Sprintf(
 		"board: %s %s\nbios: %s BIOS %s (%s)",
@@ -64,7 +64,7 @@ func (p *Probe) String() string {
 	)
 }
 
-// JSON representation of the struct
+// JSON representation of the struct.
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }

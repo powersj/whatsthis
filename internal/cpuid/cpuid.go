@@ -21,7 +21,7 @@ func New() (*Probe, error) {
 	return probe, nil
 }
 
-// Probe the system
+// Probe the system.
 // https://lwn.net/Articles/301888/
 func (p *Probe) probe() error {
 	p.VendorID = p.ReadCPUID()
@@ -29,25 +29,27 @@ func (p *Probe) probe() error {
 	return nil
 }
 
-// String representation of the struct
+// String representation of the struct.
 func (p *Probe) String() string {
 	return p.VendorID
 }
 
-// JSON representation of the struct
+// JSON representation of the struct.
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }
 
-// int32sToString converts the CPUID registers into a string
+// int32sToString converts the CPUID registers into a string.
 func int32sToString(args ...uint32) string {
+	var mask8bit uint32 = 0xFF
+
 	var buffer []byte
 	for _, arg := range args {
 		buffer = append(buffer,
-			byte((arg)&0xFF),
-			byte((arg>>8)&0xFF),
-			byte((arg>>16)&0xFF),
-			byte((arg>>24)&0xFF))
+			byte((arg)&mask8bit),
+			byte((arg>>8)&mask8bit),
+			byte((arg>>16)&mask8bit),
+			byte((arg>>24)&mask8bit))
 	}
 
 	return string(bytes.Trim(buffer, "\x00"))

@@ -58,7 +58,7 @@ func New() (*Probe, error) {
 	return probe, nil
 }
 
-// Probe the system
+// Probe the system.
 func (p *Probe) probe() error {
 	for _, path := range p.sys.ListNetwork() {
 		if strings.Contains(path, "/sys/class/net/lo") {
@@ -73,7 +73,8 @@ func (p *Probe) probe() error {
 			virtualDev = true
 		}
 
-		if uevent["DEVTYPE"] == "bridge" {
+		switch {
+		case uevent["DEVTYPE"] == "bridge":
 			var bridge Bridge = Bridge{
 				Name: uevent["INTERFACE"],
 				MAC:  p.MAC(path),
@@ -82,7 +83,7 @@ func (p *Probe) probe() error {
 			}
 
 			p.Bridges = append(p.Bridges, bridge)
-		} else if virtualDev {
+		case virtualDev:
 			var virtual Virtual = Virtual{
 				Name: uevent["INTERFACE"],
 				MAC:  p.MAC(path),
@@ -91,7 +92,7 @@ func (p *Probe) probe() error {
 			}
 
 			p.Virtual = append(p.Virtual, virtual)
-		} else {
+		default:
 			var adapter Adapter = Adapter{
 				Name:   uevent["INTERFACE"],
 				MAC:    p.MAC(path),
@@ -108,7 +109,7 @@ func (p *Probe) probe() error {
 	return nil
 }
 
-// String representation of the struct
+// String representation of the struct.
 func (p *Probe) String() string {
 	var result strings.Builder
 
@@ -146,7 +147,7 @@ func (p *Probe) String() string {
 	return strings.TrimSuffix(result.String(), "\n")
 }
 
-// JSON representation of the struct
+// JSON representation of the struct.
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }

@@ -34,7 +34,7 @@ func New() (*Probe, error) {
 	return probe, nil
 }
 
-// Probe the system
+// Probe the system.
 func (p *Probe) probe() error {
 	if runtime.GOARCH == "amd64" {
 		var cpuinfo string = p.proc.CPUInfo()
@@ -51,7 +51,7 @@ func (p *Probe) probe() error {
 	return nil
 }
 
-// String representation of the struct
+// String representation of the struct.
 func (p *Probe) String() string {
 	var result strings.Builder
 
@@ -78,12 +78,12 @@ func (p *Probe) String() string {
 	return result.String()
 }
 
-// JSON representation of the struct
+// JSON representation of the struct.
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }
 
-// numSockets returns the number of sockets in the system
+// numSockets returns the number of sockets in the system.
 func (p *Probe) numSockets() int {
 	var cpuSocketMap map[string]int = p.sys.CPUSocketMap()
 

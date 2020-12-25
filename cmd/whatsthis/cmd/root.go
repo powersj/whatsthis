@@ -22,7 +22,7 @@ var (
 	sourceDirectory string
 )
 
-// rootCmd represents the base command when called without any subcommands
+// rootCmd represents the base command when called without any subcommands.
 var rootCmd = &cobra.Command{
 	Use:   "whatsthis",
 	Short: "Am I in a cloud, on a container, or just plain metal?",
@@ -47,7 +47,7 @@ other commands (e.g. lsblk, ip, dmesg, dmidecode)`,
 	RunE:             root,
 }
 
-// Called before all commands to setup general run-time settings
+// Called before all commands to setup general run-time settings.
 func setup(cmd *cobra.Command, args []string) {
 	log.SetFormatter(&log.TextFormatter{
 		DisableTimestamp: true,
@@ -60,7 +60,7 @@ func setup(cmd *cobra.Command, args []string) {
 	file.RootDir = sourceDirectory
 }
 
-// Base command operations
+// Base command operations.
 func root(cmd *cobra.Command, args []string) error {
 	system, err := system.Probe()
 	if err != nil {
@@ -76,7 +76,7 @@ func root(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-// CLI function to setup flags
+// CLI function to setup flags.
 func init() {
 	rootCmd.Version = version
 
@@ -91,9 +91,9 @@ func init() {
 	)
 }
 
-// Execute adds all child commands to the root command and sets flags
-// appropriately. This is called by main.main(). It only needs to happen once
-// to the rootCmd.
+// Execute adds all child commands to the root command and sets flags.
+//
+// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)

@@ -7,8 +7,7 @@ import (
 	"github.com/powersj/whatsthis/internal/util"
 )
 
-// Probe struct for virt. Used to store the results of the probe and the
-// name of the virt discovered via CPUID (https://wiki.osdev.org/CPUID)
+// Probe struct for virt.
 type Probe struct {
 	cpuid cpuid.Probe
 
@@ -36,7 +35,7 @@ func New() (*Probe, error) {
 
 // New initializes new probe struct and probes the system.
 func (p *Probe) probe() error {
-	var virtTypes = map[string]func() bool{
+	virtTypes := map[string]func() bool{
 		"bhyve":      p.Bhyve,
 		"hyperv":     p.Hyperv,
 		"kvm":        p.KVM,
@@ -60,7 +59,7 @@ func (p *Probe) probe() error {
 	return nil
 }
 
-// String representation of the struct
+// String representation of the struct.
 func (p *Probe) String() string {
 	if p.Name == "" {
 		return "virt: not detected"
@@ -69,7 +68,7 @@ func (p *Probe) String() string {
 	return fmt.Sprintf("virt: %s", p.Name)
 }
 
-// JSON representation of the struct
+// JSON representation of the struct.
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }
@@ -100,7 +99,7 @@ func (p *Probe) QEMU() bool {
 }
 
 // VirtualBox detects if a system is on VirtualBox hypervisor.
-// TODO: not implemented yet
+// TODO: not implemented yet.
 func (p *Probe) VirtualBox() bool {
 	return false
 }

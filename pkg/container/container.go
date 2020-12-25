@@ -38,9 +38,9 @@ func New() (*Probe, error) {
 	return probe, nil
 }
 
-// Probe the system
+// Probe the system.
 func (p *Probe) probe() error {
-	var containers = map[string]func() bool{
+	containers := map[string]func() bool{
 		"docker": p.Docker,
 		"lxc":    p.LXC,
 		"podman": p.Podman,
@@ -60,7 +60,7 @@ func (p *Probe) probe() error {
 	return nil
 }
 
-// String representation of the struct
+// String representation of the struct.
 func (p *Probe) String() string {
 	if p.Name == "" {
 		return "container: not detected"
@@ -69,7 +69,7 @@ func (p *Probe) String() string {
 	return fmt.Sprintf("container: %s", p.Name)
 }
 
-// JSON representation of the struct
+// JSON representation of the struct.
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }
@@ -106,15 +106,16 @@ func (p *Probe) WSL() bool {
 	var osRelease string = p.proc.OSRelease()
 	var version string = p.proc.Version()
 
-	if strings.Contains(osRelease, "Microsoft") {
+	switch {
+	case strings.Contains(osRelease, "Microsoft"):
 		return true
-	} else if strings.Contains(osRelease, "WSL") {
+	case strings.Contains(osRelease, "WSL"):
 		return true
-	} else if strings.Contains(version, "Microsoft") {
+	case strings.Contains(version, "Microsoft"):
 		return true
-	} else if strings.Contains(version, "WSL") {
+	case strings.Contains(version, "WSL"):
 		return true
+	default:
+		return false
 	}
-
-	return false
 }

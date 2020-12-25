@@ -15,7 +15,6 @@ var virtCmd = &cobra.Command{
 	RunE:  probeVirt,
 }
 
-// probeVirt used to probe for possible virt types
 func probeVirt(cmd *cobra.Command, args []string) error {
 	probe, err := whatsthis.Virt()
 	if err != nil {
