@@ -47,7 +47,7 @@ func (*Sys) ChassisAssetTag() string {
 	return file.Read("/sys/class/dmi/id/chassis_asset_tag")
 }
 
-// CPUCoreList returns a unique list of CPUs with the same phyiscal core
+// CPUCoreList returns a unique list of CPUs with the same physical core
 // file returns a list of cores with the same physical core (e.g. 0, or 0,7)
 func (s *Sys) CPUCoreList() []string {
 	var cpuCoreList []string
@@ -128,7 +128,7 @@ func (*Sys) SysVendor() string {
 	return file.Read("/sys/class/dmi/id/sys_vendor")
 }
 
-// UEvent TOOD
+// UEvent reads from the target's uevent file and parses it
 func (s *Sys) UEvent(target string) map[string]string {
 	return file.ParseKeyValue(path.Join(target, "uevent"), "=")
 }

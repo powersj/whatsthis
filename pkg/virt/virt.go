@@ -100,7 +100,7 @@ func (p *Probe) QEMU() bool {
 }
 
 // VirtualBox detects if a system is on VirtualBox hypervisor.
-// TODO: not implimented yet
+// TODO: not implemented yet
 func (p *Probe) VirtualBox() bool {
 	return false
 }

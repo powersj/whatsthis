@@ -1,43 +1,44 @@
 # whatsthis
 
-Am I in a cloud, on a container, or just plain baremetal? This is a Go-based
-CLI and library to determine where a system is running and what makes up the
-system. I found myself wanting a single screen with system information after
-SSH'ing onto new systems to debug or test. Additionally, I started this after
-wanting to explore `/proc` and `/sys` and learn what data are available in
-each.
+*Am I on a cloud, in a container, virtualized, or plain bare metal?*
 
-To determine where a system is running, `whatsthis` is essentially an
-all-in-one collection of `systemd-detect-virt`, `virt-what`, and `cloud-id`.
-This attempts to do a best effort guess based on a variety of heuristics as to
-what container, virtualization, or cloud the system is running on.
+[![Build Status](https://travis-ci.org/powersj/whatsthis.svg?branch=master)](https://travis-ci.org/powersj/whatsthis/) [![Go Report Card](https://goreportcard.com/badge/github.com/powersj/whatsthis)](https://goreportcard.com/report/github.com/powersj/whatsthis) [![Go Reference](https://pkg.go.dev/badge/github.com/powersj/whatsthis.svg)](https://pkg.go.dev/github.com/powersj/whatsthis)
 
-To summarize the system components, `whatsthis` will scan the filesystem
-for known files in `/sys`, `/proc`, or other directories. This data is then
-used to create a short summarize of the system in place of running a number of
-other commands (e.g. `lsblk`, `ip`, `dmesg`, `dmidecode`)
+## Overview
 
-Finally, I have never written a program in Go an saw this as an opportunity to
-learn the ecosystem and language. If you have pointers on how the code can be
-improved please do hesitate to let me know by opening an
-[issue](https://github.com/powersj/whatsthis/issues/new). If you are interested
-in a similar go-lang based cli and library, consider looking at
-[ghw](https://github.com/jaypipes/ghw) for more detailed hardware information.
+`whatsthis` is a Go-based CLI and library to determine where a system is
+running and what makes up the system.
+
+To determine where a system is running, `whatsthis` will attempt to make a
+best-effort guess based on a variety of heuristics as to what container,
+virtualization, or cloud the system is running on. This is similar to an
+all-in-one collection of the `systemd-detect-virt`, `virt-what`, and `cloud-id`
+commands.
+
+To summarize the system components, `whatsthis` will scan the filesystem for
+known files in `/sys`, `/proc`, or other directories. This data is then used to
+create a short summarize of the system in place of running several other
+commands (e.g. `lsblk`, `ip`, `dmesg`, `dmidecode`)
 
 ## Install
 
-TBD
+See the [latest release](https://github.com/powersj/whatsthis/releases/latest)
+page for the available binary downloads.
 
 ### Architecture Support
 
-`whatsthis` was developed with Linux in mind. There is one amd64 assembly file
-as well, so the full execution is limited to linux on AMD64 for now.
+Releases include binaries for x86_64 (amd64) as well as some initial support
+for aarch64 (arm64). The aarch64 architecture does not have the same cpuid
+capabilities in place as x86_64 does. As such the virtualization detection
+on aarch64 is not functional.
 
 ### Operating System Support
 
-The *BSD do not mount `/proc` by default and `/sys` was essentially replaced
-with the use of `sysctl`. This app could be exteded to learn how to use
-`sysctl` down the road.
+`whatsthis` was developed with Linux based OSes in mind.
+
+The *BSDs do not mount `/proc` by default and `/sys` is replaced by `sysctl`.
+`whatsthis` could learn how to use `sysctl` down the road. This could also help
+enable Darwin support.
 
 ## CLI Usage
 
@@ -96,11 +97,34 @@ $ whatsthis cpu --json
 See `whatsthis help` for a full list of modules and more information on
 options.
 
-## Library Usage
+## API Usage
 
-TODO
+`whatsthis` offers several structs and functions to help determine the cloud,
+container, virtualization, and the underlying hardware of a system. Users can
+take advantage of these in their own code:
 
-## Bugs & Contact
+```go
+package main
+
+import (
+  "fmt"
+
+  "github.com/powersj/whatsthis"
+)
+
+func main() {
+  cloud, err := whatsthis.Cloud()
+  if err != nil {
+    fmt.Printf("Error getting cloud info: %v", err)
+  }
+
+  if cloud.Detected {
+    fmt.Printf(cloud.Name)
+  }
+}
+```
+
+## Support
 
 If you find a bug, have a question, or ideas for improvements please file an
 [issue](https://github.com/powersj/whatsthis/issues/new) on GitHub.
