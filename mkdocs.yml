@@ -1,0 +1,11 @@
+site_name: whatsthis
+site_description: Am I on a cloud, in a container, virtualized, or plain bare metal?
+theme:
+  name: material
+repo_name: powersj/whatsthis
+repo_url: https://github.com/powersj/whatsthis
+nav:
+- whatsthis: index.md
+- cloud.md
+- container.md
+- virtualization.md
