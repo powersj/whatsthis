@@ -9,7 +9,7 @@ import (
 
 // Probe struct for virt.
 type Probe struct {
-	cpuid cpuid.Probe
+	vendorID string
 
 	Detected bool            `json:"detected"`
 	Name     string          `json:"name"`
@@ -18,10 +18,8 @@ type Probe struct {
 
 // New initializes new probe struct and probes the system.
 func New() (*Probe, error) {
-	cpuid := cpuid.Probe{}
-
 	probe := &Probe{
-		cpuid:    cpuid,
+		vendorID: cpuid.VendorID(),
 		Detected: false,
 		Name:     "",
 		Results:  make(map[string]bool),
@@ -75,27 +73,27 @@ func (p *Probe) JSON() string {
 
 // Bhyve detect if a system is on bhyve hypervisor.
 func (p *Probe) Bhyve() bool {
-	return p.cpuid.VendorID == "bhyve bhyve"
+	return p.vendorID == "bhyve bhyve"
 }
 
 // Hyperv detects if a system is on Hyper-V hypervisor.
 func (p *Probe) Hyperv() bool {
-	return p.cpuid.VendorID == "Microsoft Hv"
+	return p.vendorID == "Microsoft Hv"
 }
 
 // KVM detects if a system is on KVM hypervisor.
 func (p *Probe) KVM() bool {
-	return p.cpuid.VendorID == "KVMKVMKVM"
+	return p.vendorID == "KVMKVMKVM"
 }
 
 // Parallels detects if a system is on Parallels hypervisor.
 func (p *Probe) Parallels() bool {
-	return p.cpuid.VendorID == " lrpepyh vr"
+	return p.vendorID == " lrpepyh vr"
 }
 
 // QEMU detects if a system is on QEMU hypervisor.
 func (p *Probe) QEMU() bool {
-	return p.cpuid.VendorID == "TCGTCGTCGTCG"
+	return p.vendorID == "TCGTCGTCGTCG"
 }
 
 // VirtualBox detects if a system is on VirtualBox hypervisor.
@@ -108,12 +106,12 @@ func (p *Probe) VirtualBox() bool {
 // TODO: there may be additional scenarios that need to be tested for given
 // the large number of VMware products.
 func (p *Probe) VMware() bool {
-	return p.cpuid.VendorID == "VMwareVMware"
+	return p.vendorID == "VMwareVMware"
 }
 
 // Xen detects if a system is on Xen hypervisor.
 // TODO: There are a number of other scenarios that need to be covered.
 // This currently only covers on of the most basic ones.
 func (p *Probe) Xen() bool {
-	return p.cpuid.VendorID == "XenVMMXenVMM"
+	return p.vendorID == "XenVMMXenVMM"
 }
