@@ -8,19 +8,19 @@ on the result of the CPU identification instruction known as
 
 The instruction was created to provide a mechanism for programmers to obtain
 the system's CPU model. Virtualization providers will set this string to
-provide a mechanism to determine what virtualization platfrom a system is
+provide a mechanism to determine what virtualization platform a system is
 running on.
 
 !!! bug
     As cpuid is only available on x86-64, virtualization support in aarch64 is
-    currently non-existant. When running on aarch64, the function will always
-    return an emptry string and therefore never detect any virtualization
+    currently non-existent. When running on aarch64, the function will always
+    return an empty string and therefore never detect any virtualization
     platform correctly.
 
 ## Supported
 
 Below is a table of the currently known virtualization platforms and their
-cooresponding advertised vendor ID found from cpuid:
+corresponding advertised vendor ID found from cpuid:
 
 | Platform   | Vendor ID      |
 | :--------- | :------------- |
