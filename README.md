@@ -6,43 +6,33 @@
 
 ## Overview
 
-`whatsthis` is a Go-based CLI and library to determine where a system is
+whatsthis is a Go-based CLI and library to determine where a system is
 running and what makes up the system.
 
-To determine where a system is running, `whatsthis` will attempt to make a
+To determine where a system is running, whatsthis will attempt to make a
 best-effort guess based on a variety of heuristics as to what container,
 virtualization, or cloud the system is running on. This is similar to an
 all-in-one collection of the `systemd-detect-virt`, `virt-what`, and `cloud-id`
 commands.
 
-To summarize the system components, `whatsthis` will scan the filesystem for
+To summarize the system components, whatsthis will scan the filesystem for
 known files in `/sys`, `/proc`, or other directories. This data is then used to
 create a short summarize of the system in place of running several other
 commands (e.g. `lsblk`, `ip`, `dmesg`, `dmidecode`)
 
 ## Install
 
+For complete details on how to install from binary, source, or from go, check
+out the [install](install.md) page for more
+information. This page also details the support for architectures and operating
+systems.
+
 See the [latest release](https://github.com/powersj/whatsthis/releases/latest)
 page for the available binary downloads.
 
-### Architecture Support
+## CLI
 
-Releases include binaries for x86-64 (amd64) as well as some initial support
-for aarch64 (arm64). The aarch64 architecture does not have the same cpuid
-capabilities in place as x86-64 does. As such the virtualization detection
-on aarch64 is not functional.
-
-### Operating System Support
-
-`whatsthis` was developed with Linux based OSes in mind.
-
-The *BSDs do not mount `/proc` by default and `/sys` is replaced by `sysctl`.
-`whatsthis` could learn how to use `sysctl` down the road. This could also help
-enable Darwin support.
-
-## CLI Usage
-
-To get a full summary of the system run `whatsthis` and the output will show
+To get a full summary of the system run whatsthis and the output will show
 a breakdown module name by module name:
 
 ```text
@@ -97,9 +87,9 @@ $ whatsthis cpu --json
 See `whatsthis help` for a full list of modules and more information on
 options.
 
-## API Usage
+## API
 
-`whatsthis` offers several structs and functions to help determine the cloud,
+whatsthis offers several structs and functions to help determine the cloud,
 container, virtualization, and the underlying hardware of a system. Users can
 take advantage of these in their own code:
 
