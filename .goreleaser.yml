@@ -9,7 +9,7 @@ builds:
     goarch: [amd64, arm64]
 archive:
   replacements:
-    amd64: x86_64
+    amd64: x86-64
     arm64: aarch64
 checksum:
   name_template: '{{ .ProjectName }}_checksums.txt'

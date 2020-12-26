@@ -25,24 +25,22 @@ var (
 // rootCmd represents the base command when called without any subcommands.
 var rootCmd = &cobra.Command{
 	Use:   "whatsthis",
-	Short: "Am I in a cloud, on a container, or just plain metal?",
-	Long: `Am I in a cloud, on a container, or just plain metal?
+	Short: "Am I on a cloud, in a container, virtualized, or plain bare metal?",
+	Long: `Am I on a cloud, in a container, virtualized, or plain bare metal?
 
-This is a Go-based CLI and library to determine where a system is running and
-what makes up the system. I found myself wanting a single screen with system
-information after SSH'ing onto new systems to debug or test. Additionally, I
-started this after wanting to explore /proc and /sys and learn what data are
-available in each.
+whatsthis is a Go-based CLI and library to determine where a system is
+running and what makes up the system.
 
-To determine where a system is running, whatsthis is essentially an
-all-in-one collection of systemd-detect-virt, virt-what, and cloud-id.
-This attempts to do a best effort guess based on a variety of heuristics as to
-what container, virtualization, or cloud the system is running on.
+To determine where a system is running, whatsthis will attempt to make a
+best-effort guess based on a variety of heuristics as to what container,
+virtualization, or cloud the system is running on. This is similar to an
+all-in-one collection of the systemd-detect-virt, virt-what, and cloud-id
+commands.
 
-To summarize the system components, whatsthis will scan the filesystem
-for known files in /sys, /proc, or other directories. This data is then
-used to create a short summarize of the system in place of running a number of
-other commands (e.g. lsblk, ip, dmesg, dmidecode)`,
+To summarize the system components, whatsthis will scan the filesystem for
+known files in /sys, /proc, or other directories. This data is then used to
+create a short summarize of the system in place of running several other
+commands (e.g. lsblk, ip, dmesg, dmidecode)`,
 	PersistentPreRun: setup,
 	RunE:             root,
 }

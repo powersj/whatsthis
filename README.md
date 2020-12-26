@@ -27,9 +27,9 @@ page for the available binary downloads.
 
 ### Architecture Support
 
-Releases include binaries for x86_64 (amd64) as well as some initial support
+Releases include binaries for x86-64 (amd64) as well as some initial support
 for aarch64 (arm64). The aarch64 architecture does not have the same cpuid
-capabilities in place as x86_64 does. As such the virtualization detection
+capabilities in place as x86-64 does. As such the virtualization detection
 on aarch64 is not functional.
 
 ### Operating System Support
@@ -45,7 +45,7 @@ enable Darwin support.
 To get a full summary of the system run `whatsthis` and the output will show
 a breakdown module name by module name:
 
-```shell
+```text
 $ whatsthis
 cloud: not detected
 virt: not detected
@@ -77,14 +77,14 @@ network:
 
 To run only one particular module, run with only that module name:
 
-```shell
+```text
 $ whatsthis cpu
 cpu: AMD Ryzen 9 5950X 16-Core Processor with 16 cores (32 threads) on 1 socket
 ```
 
 Finally, to get the output in JSON add the `--json` flag:
 
-```shell
+```json
 $ whatsthis cpu --json
 {
 "model": "AMD Ryzen 9 5950X 16-Core Processor",

@@ -1,11 +1,27 @@
 site_name: whatsthis
 site_description: Am I on a cloud, in a container, virtualized, or plain bare metal?
-theme:
-  name: material
+copyright: Copyright &copy; 2020 - 2021 Joshua Powers
 repo_name: powersj/whatsthis
 repo_url: https://github.com/powersj/whatsthis
+theme:
+  name: material
+  favicon: images/favicon.ico
+  font:
+    text: Ubuntu
+    code: JetBrains Mono
+  icon:
+    logo: material/developer-board
+    repo: fontawesome/brands/github
+  palette:
+  - scheme: default
+    primary: deep purple
+    accent: amber
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
 nav:
-- whatsthis: index.md
-- cloud.md
-- container.md
+- Home: index.md
+- clouds.md
+- containers.md
 - virtualization.md
