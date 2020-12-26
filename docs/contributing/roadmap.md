@@ -1,4 +1,4 @@
-# TODO
+# Roadmap
 
 This is a collection of future ideas for the project.
 
@@ -11,10 +11,10 @@ This is a collection of future ideas for the project.
 
 ## Next + 1
 
-* Greater arm64 support
-* PCI IDs for network and storage devices?
+* Greater arm64 support for virtualization
+* PCI IDs for network and storage devices
 * whatsthis-collect: enable basic functionality to start capturing required
-  files.
+  files
 
 ## Next + 2
 
