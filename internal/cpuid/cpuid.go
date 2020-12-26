@@ -2,41 +2,31 @@ package cpuid
 
 import (
 	"bytes"
-
-	"github.com/powersj/whatsthis/internal/util"
+	"runtime"
 )
 
-// Probe struct for cpuid.
-type Probe struct {
-	VendorID string `json:"vendorID"`
-}
-
-// New initializes new probe struct and probes the system.
-func New() (*Probe, error) {
-	probe := &Probe{}
-	if err := probe.probe(); err != nil {
-		return nil, err
+// VendorID returns vendor ID string from CPUID.
+func VendorID() string {
+	if runtime.GOARCH != "amd64" {
+		return ""
 	}
 
-	return probe, nil
+	var eax uint32 = 0x40000000
+	_, ebx, ecx, edx := cpuid(eax, 0)
+	return int32sToString(ebx, ecx, edx)
 }
 
-// Probe the system.
-// https://lwn.net/Articles/301888/
-func (p *Probe) probe() error {
-	p.VendorID = p.ReadCPUID()
+// IsHypervisor returns whether the hypervisor present bit is set.
+func IsHypervisor() bool {
+	if runtime.GOARCH != "amd64" {
+		return false
+	}
 
-	return nil
-}
+	var eax uint32 = 0x1
+	_, _, ecx, _ := cpuid(eax, 0)
 
-// String representation of the struct.
-func (p *Probe) String() string {
-	return p.VendorID
-}
-
-// JSON representation of the struct.
-func (p *Probe) JSON() string {
-	return util.ObjectJSONString(&p)
+	var mask uint32 = 0x80000000
+	return (ecx & mask) == mask
 }
 
 // int32sToString converts the CPUID registers into a string.
