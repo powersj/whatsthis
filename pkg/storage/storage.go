@@ -85,6 +85,9 @@ func (p *Probe) String() string {
 	result.WriteString("storage:")
 	for _, disk := range p.Disks {
 		result.WriteString(fmt.Sprintf("\n- %s %s", disk.Name, disk.Size))
+		if len(disk.Partitions) > 0 {
+			result.WriteString(fmt.Sprintf(":"))
+		}
 		for _, partition := range disk.Partitions {
 			result.WriteString(fmt.Sprintf(
 				"\n  - %s %s %s", partition.Name, partition.Size, partition.Description,
