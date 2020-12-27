@@ -39,7 +39,7 @@ func (p *Probe) probe() error {
 	if runtime.GOARCH == "amd64" {
 		var cpuinfo string = p.proc.CPUInfo()
 		rex := regexp.MustCompile(`(?:model name.*: )(.*)`)
-		p.Model = strings.TrimSuffix(rex.FindStringSubmatch(cpuinfo)[1], " ")
+		p.Model = strings.Trim(rex.FindStringSubmatch(cpuinfo)[1], " ")
 	} else {
 		p.Model = "ARMv8"
 	}
