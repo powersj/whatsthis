@@ -2,6 +2,7 @@ package platform
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/powersj/whatsthis/internal/filesystem"
 	"github.com/powersj/whatsthis/internal/util"
@@ -58,13 +59,48 @@ func (p *Probe) probe() error {
 
 // String representation of the struct.
 func (p *Probe) String() string {
-	return fmt.Sprintf(
-		"board: %s %s\nbios: %s BIOS %s (%s)",
-		p.Board.Vendor, p.Board.Name, p.BIOS.Vendor, p.BIOS.Version, p.BIOS.Date,
-	)
+	return fmt.Sprintf("%s\n%s", p.Board.String(), p.BIOS.String())
 }
 
 // JSON representation of the struct.
 func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
+}
+
+// String representation of the struct.
+func (b *Board) String() string {
+	return fmt.Sprintf("board: %s %s", b.Vendor, b.Name)
+}
+
+// String representation of the struct.
+func (b *BIOS) String() string {
+	var bios strings.Builder
+
+	if b.Vendor != "" {
+		if b.Version != "" {
+			if b.Date != "" {
+				bios.WriteString(fmt.Sprintf(
+					"bios: %s %s %s", b.Vendor, b.Version, b.Date,
+				))
+			} else {
+				bios.WriteString(fmt.Sprintf(
+					"bios: %s %s", b.Vendor, b.Version,
+				))
+			}
+		} else {
+			if b.Date != "" {
+				bios.WriteString(fmt.Sprintf(
+					"bios: %s %s", b.Vendor, b.Date,
+				))
+			} else {
+				bios.WriteString(fmt.Sprintf(
+					"bios: %s", b.Vendor,
+				))
+			}
+		}
+	} else {
+		bios.WriteString("bios:")
+	}
+
+	return bios.String()
 }
