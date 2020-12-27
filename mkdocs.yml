@@ -26,12 +26,16 @@ nav:
 - Overview: index.md
 - Install: install.md
 - CLI: cli.md
-- Internals:
-  - Clouds: internals/clouds.md
-  - Containers: internals/containers.md
-  - Virtualization: internals/virtualization.md
+- Probes:
+  - Clouds: probes/clouds.md
+  - Containers: probes/containers.md
+  - Virtualization: probes/virtualization.md
 - Contributing:
   - Overview: contributing/overview.md
-  - Docs: contributing/documentation.md
-  - Versioning: contributing/versioning.md
   - Roadmap: contributing/roadmap.md
+  - Versioning: contributing/versioning.md
+  - Docs: contributing/documentation.md
+  - Testing:
+    - Containers: testing/containers.md
+    - KVM: testing/kvm.md
+    - QEMU: testing/qemu.md
