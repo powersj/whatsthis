@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"path/filepath"
 	"sort"
 	"strings"
 
@@ -87,11 +88,15 @@ func (p *Probe) probe() error {
 		}
 
 		var uevent map[string]string = p.sys.UEvent(path)
+		var name string = uevent["INTERFACE"]
+		if name == "" {
+			name = filepath.Base(path)
+		}
 
 		switch {
 		case uevent["DEVTYPE"] == "bridge":
 			var bridge Bridge = Bridge{
-				Name: uevent["INTERFACE"],
+				Name: name,
 				MAC:  p.MAC(path),
 				MTU:  p.MTU(path),
 				Path: path,
@@ -100,7 +105,7 @@ func (p *Probe) probe() error {
 			p.Bridges = append(p.Bridges, bridge)
 		case virtualDev:
 			var virtual Virtual = Virtual{
-				Name: uevent["INTERFACE"],
+				Name: name,
 				MAC:  p.MAC(path),
 				MTU:  p.MTU(path),
 				Path: path,
@@ -109,7 +114,7 @@ func (p *Probe) probe() error {
 			p.Virtual = append(p.Virtual, virtual)
 		default:
 			var adapter Adapter = Adapter{
-				Name:   uevent["INTERFACE"],
+				Name:   name,
 				MAC:    p.MAC(path),
 				Speed:  p.Speed(path),
 				MTU:    p.MTU(path),
