@@ -7,6 +7,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/pkg/errors"
 	"github.com/powersj/whatsthis/internal/filesystem"
 	"github.com/powersj/whatsthis/internal/util"
 )
@@ -56,6 +57,16 @@ func New() (*Probe, error) {
 		return nil, err
 	}
 
+	sort.Slice(probe.Physical, func(i, j int) bool {
+		return probe.Physical[i].Name < probe.Physical[j].Name
+	})
+	sort.Slice(probe.Virtual, func(i, j int) bool {
+		return probe.Virtual[i].Name < probe.Virtual[j].Name
+	})
+	sort.Slice(probe.Bridges, func(i, j int) bool {
+		return probe.Bridges[i].Name < probe.Bridges[j].Name
+	})
+
 	return probe, nil
 }
 
@@ -66,13 +77,16 @@ func (p *Probe) probe() error {
 			continue
 		}
 
-		var uevent map[string]string = p.sys.UEvent(path)
-		var virtualDev bool = false
-
-		dest, _ := os.Readlink(path)
-		if strings.Contains(dest, "devices/virtual/net") {
-			virtualDev = true
+		if p.regularFile(path) {
+			continue
 		}
+
+		virtualDev, err := p.isVirtual(path)
+		if err != nil {
+			return errors.Wrap(err, "error determining virtual device")
+		}
+
+		var uevent map[string]string = p.sys.UEvent(path)
 
 		switch {
 		case uevent["DEVTYPE"] == "bridge":
@@ -106,16 +120,6 @@ func (p *Probe) probe() error {
 			p.Physical = append(p.Physical, adapter)
 		}
 	}
-
-	sort.Slice(p.Physical, func(i, j int) bool {
-		return p.Physical[i].Name < p.Physical[j].Name
-	})
-	sort.Slice(p.Virtual, func(i, j int) bool {
-		return p.Virtual[i].Name < p.Virtual[j].Name
-	})
-	sort.Slice(p.Bridges, func(i, j int) bool {
-		return p.Bridges[i].Name < p.Bridges[j].Name
-	})
 
 	return nil
 }
@@ -188,4 +192,18 @@ func (p *Probe) MTU(target string) int {
 // Speed returns the speed of the adapter.
 func (p *Probe) Speed(target string) int {
 	return p.sys.ReadInt(path.Join(target, "speed"))
+}
+
+func (p *Probe) isVirtual(target string) (bool, error) {
+	dest, err := os.Readlink(target)
+	if err != nil {
+		return false, errors.Wrap(err, "error reading readlink")
+	}
+
+	return strings.Contains(dest, "devices/virtual/net"), nil
+}
+
+func (p *Probe) regularFile(target string) bool {
+	fi, _ := os.Lstat(target)
+	return fi.Mode().IsRegular()
 }
