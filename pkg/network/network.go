@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"sort"
 	"strings"
 
 	"github.com/powersj/whatsthis/internal/filesystem"
@@ -15,7 +16,7 @@ import (
 type Probe struct {
 	sys filesystem.Sys
 
-	Adapters []Adapter `json:"adapters"`
+	Physical []Adapter `json:"physical"`
 	Bridges  []Bridge  `json:"bridges"`
 	Virtual  []Virtual `json:"virtual"`
 }
@@ -102,9 +103,19 @@ func (p *Probe) probe() error {
 				Path:   path,
 			}
 
-			p.Adapters = append(p.Adapters, adapter)
+			p.Physical = append(p.Physical, adapter)
 		}
 	}
+
+	sort.Slice(p.Physical, func(i, j int) bool {
+		return p.Physical[i].Name < p.Physical[j].Name
+	})
+	sort.Slice(p.Virtual, func(i, j int) bool {
+		return p.Virtual[i].Name < p.Virtual[j].Name
+	})
+	sort.Slice(p.Bridges, func(i, j int) bool {
+		return p.Bridges[i].Name < p.Bridges[j].Name
+	})
 
 	return nil
 }
@@ -115,8 +126,8 @@ func (p *Probe) String() string {
 
 	result.WriteString("network:\n")
 
-	result.WriteString("- adapters:\n")
-	for _, adapter := range p.Adapters {
+	result.WriteString("- physical:\n")
+	for _, adapter := range p.Physical {
 		result.WriteString(
 			fmt.Sprintf(
 				"  - %s %s %d mtu %d (%s)\n",
