@@ -44,16 +44,17 @@ Thank you for contributing!
 
 ### Code changes
 
-The project has a basic CI setup already, which will run a lint, build, and
-tests. These need to pass and I am more than willing to help you work through
-any issues you come across. This includes disabling or changing the config
-on the linters.
+The project has a basic CI setup already, which will run a lint, build, build
+the docs, and tests. These need to pass and I am more than willing to help you
+work through any issues you come across. This includes disabling or changing
+the config on the linters.
 
 These CI steps are very easy to run using the makefile via:
 
 ```text
 make lint
 make build
+make docs
 make test
 ```
 
