@@ -2,6 +2,7 @@ package storage
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/powersj/whatsthis/internal/filesystem"
@@ -49,8 +50,6 @@ func New() (*Probe, error) {
 
 // Probe the system.
 func (p *Probe) probe() error {
-	var disks []Disk
-
 	for _, path := range p.sys.ListBlock() {
 		if strings.Contains(path, "/sys/class/block/loop") {
 			continue
@@ -70,10 +69,12 @@ func (p *Probe) probe() error {
 			Partitions: p.Partitions(uevent["DEVNAME"]),
 		}
 
-		disks = append(disks, disk)
+		p.Disks = append(p.Disks, disk)
 	}
 
-	p.Disks = disks
+	sort.Slice(p.Disks, func(i, j int) bool {
+		return p.Disks[i].Name < p.Disks[j].Name
+	})
 
 	return nil
 }
@@ -125,6 +126,10 @@ func (p *Probe) Partitions(parentDevName string) []Partition {
 
 		partitions = append(partitions, partition)
 	}
+
+	sort.Slice(partitions, func(i, j int) bool {
+		return partitions[i].Number < partitions[j].Number
+	})
 
 	return partitions
 }
