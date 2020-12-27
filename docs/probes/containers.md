@@ -28,7 +28,7 @@ such, this looks for the `/run/.containerenv` file as well.
 ### wsl
 
 Per a [GitHub issue](https://github.com/Microsoft/WSL/issues/423#issuecomment-221627364)
-on the WSL project page, checking for "Microsoft" or "WSL" in either of these
+on the WSL project page, checking for "microsoft" in either of these
 two files:
 
 * `/proc/sys/kernel/osrelease`

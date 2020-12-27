@@ -103,17 +103,10 @@ func (p *Probe) Podman() bool {
 
 // WSL detects if a system is on the WSL.
 func (p *Probe) WSL() bool {
-	var osRelease string = p.proc.OSRelease()
-	var version string = p.proc.Version()
-
 	switch {
-	case strings.Contains(osRelease, "Microsoft"):
+	case strings.Contains(strings.ToLower(p.proc.OSRelease()), "microsoft"):
 		return true
-	case strings.Contains(osRelease, "WSL"):
-		return true
-	case strings.Contains(version, "Microsoft"):
-		return true
-	case strings.Contains(version, "WSL"):
+	case strings.Contains(strings.ToLower(p.proc.Version()), "microsoft"):
 		return true
 	default:
 		return false
