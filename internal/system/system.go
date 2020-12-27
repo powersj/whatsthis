@@ -86,8 +86,8 @@ func (s *System) String() string {
 	return fmt.Sprintf(
 		"%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
 		s.Cloud.String(),
-		s.Virt.String(),
 		s.Container.String(),
+		s.Virt.String(),
 		s.Distro.String(),
 		s.Platform.String(),
 		s.CPU.String(),
