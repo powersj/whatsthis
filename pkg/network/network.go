@@ -124,38 +124,44 @@ func (p *Probe) probe() error {
 func (p *Probe) String() string {
 	var result strings.Builder
 
-	result.WriteString("network:\n")
+	result.WriteString("network:")
 
-	result.WriteString("- physical:\n")
-	for _, adapter := range p.Physical {
-		result.WriteString(
-			fmt.Sprintf(
-				"  - %s %s %d mtu %d (%s)\n",
-				adapter.Name, adapter.MAC, adapter.Speed,
-				adapter.MTU, adapter.Driver,
-			),
-		)
+	if len(p.Physical) > 0 {
+		result.WriteString("\n- physical:")
+		for _, adapter := range p.Physical {
+			result.WriteString(
+				fmt.Sprintf(
+					"\n  - %s %s %d mtu %d (%s)",
+					adapter.Name, adapter.MAC, adapter.Speed,
+					adapter.MTU, adapter.Driver,
+				),
+			)
+		}
 	}
 
-	result.WriteString("- virtual:\n")
-	for _, virtual := range p.Virtual {
-		result.WriteString(
-			fmt.Sprintf(
-				"  - %s %s mtu %d\n", virtual.Name, virtual.MAC, virtual.MTU,
-			),
-		)
+	if len(p.Bridges) > 0 {
+		result.WriteString("\n- bridges:")
+		for _, bridge := range p.Bridges {
+			result.WriteString(
+				fmt.Sprintf(
+					"\n  - %s %s mtu %d", bridge.Name, bridge.MAC, bridge.MTU,
+				),
+			)
+		}
 	}
 
-	result.WriteString("- bridges:\n")
-	for _, bridge := range p.Bridges {
-		result.WriteString(
-			fmt.Sprintf(
-				"  - %s %s mtu %d\n", bridge.Name, bridge.MAC, bridge.MTU,
-			),
-		)
+	if len(p.Virtual) > 0 {
+		result.WriteString("\n- virtual:")
+		for _, virtual := range p.Virtual {
+			result.WriteString(
+				fmt.Sprintf(
+					"\n  - %s %s mtu %d", virtual.Name, virtual.MAC, virtual.MTU,
+				),
+			)
+		}
 	}
 
-	return strings.TrimSuffix(result.String(), "\n")
+	return result.String()
 }
 
 // JSON representation of the struct.
