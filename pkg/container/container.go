@@ -63,7 +63,7 @@ func (p *Probe) probe() error {
 // String representation of the struct.
 func (p *Probe) String() string {
 	if p.Name == "" {
-		return "container: not detected"
+		return "container: none"
 	}
 
 	return fmt.Sprintf("container: %s", p.Name)

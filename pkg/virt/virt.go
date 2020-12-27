@@ -60,7 +60,7 @@ func (p *Probe) probe() error {
 // String representation of the struct.
 func (p *Probe) String() string {
 	if p.Name == "" {
-		return "virt: not detected"
+		return "virt: none"
 	}
 
 	return fmt.Sprintf("virt: %s", p.Name)
