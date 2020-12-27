@@ -82,18 +82,17 @@ func (p *Probe) probe() error {
 // String representation of the struct.
 func (p *Probe) String() string {
 	var result strings.Builder
-	result.WriteString("storage:\n")
+	result.WriteString("storage:")
 	for _, disk := range p.Disks {
-		result.WriteString(fmt.Sprintf("- %s %s\n", disk.Name, disk.Size))
+		result.WriteString(fmt.Sprintf("\n- %s %s", disk.Name, disk.Size))
 		for _, partition := range disk.Partitions {
 			result.WriteString(fmt.Sprintf(
-				"  - %s %s %s\n", partition.Name, partition.Size, partition.Description,
+				"\n  - %s %s %s", partition.Name, partition.Size, partition.Description,
 			))
 		}
 	}
 
-	// Convert to string and remove last new line.
-	return strings.TrimSuffix(result.String(), "\n")
+	return result.String()
 }
 
 // JSON representation of the struct.
