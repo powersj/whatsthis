@@ -6,7 +6,8 @@ dist: bionic
 install:
   - go get -t -v ./...
   - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ${TRAVIS_HOME}/bin v1.33.0
-  - pip install mkdocs-material
+  - pyenv global 3.8
+  - pip install --user mkdocs-material
 script:
   - make lint
   - make build
