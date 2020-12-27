@@ -68,7 +68,7 @@ func (p *Probe) probe() error {
 // String representation of the struct.
 func (p *Probe) String() string {
 	if p.Name == "" {
-		return "cloud: not detected"
+		return "cloud: none"
 	}
 
 	return fmt.Sprintf("cloud: %s", p.Name)
