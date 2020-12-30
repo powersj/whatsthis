@@ -37,4 +37,47 @@ podman container rm --force test
 
 ## WSL
 
-TODO
+### Enable WSL
+
+Open a PowerShell console as Administrator and run the following to enable WSL
+and WSL 2:
+
+```shell
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
+
+There is an additional kernel update package required for download
+[here](https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package).
+Once installed, reboot the system to begin using WSL.
+
+For more details see these official instructions
+[here](https://docs.microsoft.com/en-us/windows/wsl/install-win10#manual-installation-steps).
+
+### WSL Version
+
+To set WSL 2 as the default version run the following as Administrator in a
+PowerShell console:
+
+```shell
+wsl --set-default-version 2
+```
+
+It can be helpful to switch between WSL 1 and WSL 2 during testing. Users can
+list all distributions and change the version of any running distribution by
+running.
+
+```shell
+wsl --list --all
+wsl --set-version <distro> [2|1]
+```
+
+### Testing
+
+Finally, to test the binary on a WSL distribution, copy it from your local
+filesystem by accessing it from `/mnt/c`:
+
+```text
+cp /mnt/c/Users/<username>/Documents... whatthis
+./whatsthis
+```

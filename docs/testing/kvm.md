@@ -6,16 +6,17 @@ the KVM detection.
 ## Multipass
 
 Multipass is a quick way to get an Ubuntu VM up and running. It is available
-on Windows, MacOS, and Linux. On Windows it will use the Hyper-V, on
-MacOS it will use hyperkit, and on Linux it uses KVM.
+on Windows, MacOS, and Linux. On Linux, Multipass will launch using QEMU with
+KVM.
 
 To get a Multipass VM on Ubuntu setup to test whatsthis run the following:
 
 ```text
 snap install multipass
-multipass launch focal --name f1
-multipass transfer whatsthis f1:/home/ubuntu/whatsthis
-multipass exec f1 ./whatsthis
+multipass launch focal --name test
+multipass transfer whatsthis test:/home/ubuntu/whatsthis
+multipass exec test ./whatsthis
+multipass delete --force test
 ```
 
 ## CLI
