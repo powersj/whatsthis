@@ -44,7 +44,7 @@ func (p *Probe) probe() error {
 		p.Model = "ARMv8"
 	}
 
-	p.NumCores = len(p.sys.CPUCoreList())
+	p.NumCores = p.numCores()
 	p.NumThreads = len(p.sys.ListCPU())
 	p.NumSockets = p.numSockets()
 
@@ -95,4 +95,16 @@ func (p *Probe) numSockets() int {
 	}
 
 	return len(uniqueSockets)
+}
+
+// numCores returns the number of physical cores in the system.
+func (p *Probe) numCores() int {
+	var cpuCoreMap map[int][]int = p.sys.CPUCoreMap()
+
+	var numCores int = 0
+	for _, coreIDs := range cpuCoreMap {
+		numCores += len(coreIDs)
+	}
+
+	return numCores
 }

@@ -47,19 +47,20 @@ func (*Sys) ChassisAssetTag() string {
 	return file.Read("/sys/class/dmi/id/chassis_asset_tag")
 }
 
-// CPUCoreList returns a unique list of CPUs with the same physical core
-// file returns a list of cores with the same physical core (e.g. 0, or 0,7).
-func (s *Sys) CPUCoreList() []string {
-	var cpuCoreList []string
+// CPUCoreMap returns a mapping of socket to physical cores.
+func (s *Sys) CPUCoreMap() map[int][]int {
+	var cpuCoreMap map[int][]int = make(map[int][]int)
 
 	for _, cpu := range s.ListCPU() {
-		var coreID string = file.Read(path.Join(cpu, "topology/core_cpus_list"))
-		if !util.SliceContainsString(cpuCoreList, coreID) {
-			cpuCoreList = append(cpuCoreList, coreID)
+		var socketID int = file.ReadInt(path.Join(cpu, "topology/physical_package_id"))
+		var coreID int = file.ReadInt(path.Join(cpu, "topology/core_id"))
+
+		if !util.SliceContainsInt(cpuCoreMap[socketID], coreID) {
+			cpuCoreMap[socketID] = append(cpuCoreMap[socketID], coreID)
 		}
 	}
 
-	return cpuCoreList
+	return cpuCoreMap
 }
 
 // CPUSocketMap returns a map of CPU to Socket.
