@@ -34,6 +34,7 @@ func ListDirsWithRegex(basePath string, regularExpression string) []string {
 	file, err := os.Open(path.Join(RootDir, basePath))
 	if err != nil {
 		fmt.Println("failed opening directory:", err)
+		return make([]string, 0)
 	}
 
 	list, _ := file.Readdirnames(0)
@@ -59,22 +60,16 @@ func Read(file string) string {
 
 // ReadInt a file and return value as an int.
 func ReadInt(file string) int {
-	integer, err := strconv.Atoi(Read(file))
-	if err != nil {
-		return -1
-	}
+	integer, _ := strconv.Atoi(Read(file))
 
 	return integer
 }
 
 // ReadInt64 a file and return value as an int64.
 func ReadInt64(file string) int64 {
-	integer, err := strconv.ParseInt(Read(file), 10, 64)
-	if err != nil {
-		return -1
-	}
+	integer64, _ := strconv.ParseInt(Read(file), 10, 64)
 
-	return integer
+	return integer64
 }
 
 // ParseKeyValue parses a key value file with a specified delimiter.
@@ -83,7 +78,7 @@ func ParseKeyValue(file string, delimiter string) map[string]string {
 
 	var output string = Read(file)
 	if output == "" {
-		return nil
+		return make(map[string]string)
 	}
 
 	for _, line := range strings.Split(output, "\n") {
