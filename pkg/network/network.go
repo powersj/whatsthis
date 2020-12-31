@@ -136,37 +136,23 @@ func (p *Probe) String() string {
 	result.WriteString("network:")
 
 	if len(p.Physical) > 0 {
-		result.WriteString("\n- physical:")
+		result.WriteString("\n  physical:")
 		for _, adapter := range p.Physical {
-			result.WriteString(
-				fmt.Sprintf(
-					"\n  - %s %s %d mtu %d (%s)",
-					adapter.Name, adapter.MAC, adapter.Speed,
-					adapter.MTU, adapter.Driver,
-				),
-			)
+			result.WriteString(fmt.Sprintf("\n    - %s", adapter.String()))
 		}
 	}
 
 	if len(p.Bridges) > 0 {
-		result.WriteString("\n- bridges:")
+		result.WriteString("\n  bridges:")
 		for _, bridge := range p.Bridges {
-			result.WriteString(
-				fmt.Sprintf(
-					"\n  - %s %s mtu %d", bridge.Name, bridge.MAC, bridge.MTU,
-				),
-			)
+			result.WriteString(fmt.Sprintf("\n    - %s", bridge.String()))
 		}
 	}
 
 	if len(p.Virtual) > 0 {
-		result.WriteString("\n- virtual:")
+		result.WriteString("\n  virtual:")
 		for _, virtual := range p.Virtual {
-			result.WriteString(
-				fmt.Sprintf(
-					"\n  - %s %s mtu %d", virtual.Name, virtual.MAC, virtual.MTU,
-				),
-			)
+			result.WriteString(fmt.Sprintf("\n    - %s", virtual.String()))
 		}
 	}
 
@@ -211,4 +197,19 @@ func (p *Probe) isVirtual(target string) (bool, error) {
 func (p *Probe) regularFile(target string) bool {
 	fi, _ := os.Lstat(target)
 	return fi.Mode().IsRegular()
+}
+
+// String representation of the struct.
+func (a *Adapter) String() string {
+	return fmt.Sprintf("%s %s %d mtu %d (%s)", a.Name, a.MAC, a.Speed, a.MTU, a.Driver)
+}
+
+// String representation of the struct.
+func (b *Bridge) String() string {
+	return fmt.Sprintf("%s %s mtu %d", b.Name, b.MAC, b.MTU)
+}
+
+// String representation of the struct.
+func (v *Virtual) String() string {
+	return fmt.Sprintf("%s %s mtu %d", v.Name, v.MAC, v.MTU)
 }

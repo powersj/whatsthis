@@ -82,18 +82,14 @@ func (p *Probe) probe() error {
 // String representation of the struct.
 func (p *Probe) String() string {
 	var result strings.Builder
+
 	result.WriteString("storage:")
+
 	for _, disk := range p.Disks {
-		if len(disk.Partitions) > 0 {
-			result.WriteString(fmt.Sprintf("\n- %s %s:", disk.Name, disk.Size))
-		} else {
-			result.WriteString(fmt.Sprintf("\n- %s %s", disk.Name, disk.Size))
-		}
+		result.WriteString(fmt.Sprintf("\n  %s:", disk.String()))
 
 		for _, partition := range disk.Partitions {
-			result.WriteString(fmt.Sprintf(
-				"\n  - %s %s %s", partition.Name, partition.Size, partition.Description,
-			))
+			result.WriteString(fmt.Sprintf("\n    - %s", partition.String()))
 		}
 	}
 
@@ -136,4 +132,14 @@ func (p *Probe) Partitions(parentDevName string) []Partition {
 	})
 
 	return partitions
+}
+
+// String representation of the struct.
+func (d *Disk) String() string {
+	return fmt.Sprintf("%s %s", d.Name, d.Size)
+}
+
+// String representation of the struct.
+func (p *Partition) String() string {
+	return fmt.Sprintf("%s %s %s", p.Name, p.Size, p.Description)
 }
