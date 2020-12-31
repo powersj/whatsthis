@@ -93,24 +93,21 @@ func TestListBlock(t *testing.T) {
 	file.RootDir = "testdata"
 	var sys Sys = Sys{}
 
-	var list []string = sys.ListBlock()
-	assert.Equal(t, "/sys/class/block/nvme0n1p1", list[0])
+	assert.Equal(t, 3, len(sys.ListBlock()))
 }
 
 func TestListCPU(t *testing.T) {
 	file.RootDir = "testdata"
 	var sys Sys = Sys{}
 
-	var list []string = sys.ListCPU()
-	assert.Equal(t, "/sys/devices/system/cpu/cpu0", list[0])
+	assert.Equal(t, 2, len(sys.ListCPU()))
 }
 
 func TestListNetwork(t *testing.T) {
 	file.RootDir = "testdata"
 	var sys Sys = Sys{}
 
-	var list []string = sys.ListNetwork()
-	assert.Equal(t, "/sys/class/net/wlp5s0", list[0])
+	assert.Equal(t, 2, len(sys.ListNetwork()))
 }
 
 func TestProductName(t *testing.T) {
