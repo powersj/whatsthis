@@ -37,5 +37,6 @@ nav:
   - Docs: contributing/documentation.md
   - Testing:
     - Containers: testing/containers.md
+    - Hyper-V: testing/hyperv.md
     - KVM: testing/kvm.md
     - QEMU: testing/qemu.md
