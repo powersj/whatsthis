@@ -40,7 +40,7 @@ func ListDirsWithRegex(basePath string, regularExpression string) []string {
 	for _, name := range list {
 		matches := rex.FindStringSubmatch(name)
 		if len(matches) > 0 {
-			values = append(values, path.Join(RootDir, basePath, matches[0]))
+			values = append(values, path.Join(basePath, matches[0]))
 		}
 	}
 
@@ -78,10 +78,10 @@ func ReadInt64(file string) int64 {
 }
 
 // ParseKeyValue parses a key value file with a specified delimiter.
-func ParseKeyValue(target string, delimiter string) map[string]string {
+func ParseKeyValue(file string, delimiter string) map[string]string {
 	var results map[string]string = make(map[string]string)
 
-	var output string = Read(target)
+	var output string = Read(file)
 	if output == "" {
 		return nil
 	}

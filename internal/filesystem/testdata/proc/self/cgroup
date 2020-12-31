@@ -1,0 +1,13 @@
+12:blkio:/
+11:freezer:/
+10:devices:/user.slice
+9:pids:/user.slice/user-1000.slice/user@1000.service
+8:memory:/user.slice/user-1000.slice/user@1000.service
+7:rdma:/
+6:net_cls,net_prio:/
+5:hugetlb:/
+4:cpu,cpuacct:/
+3:perf_event:/
+2:cpuset:/
+1:name=systemd:/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.kde.konsole-de60ffa667e74e95830d13266a0b3ab3.scope
+0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.kde.konsole-de60ffa667e74e95830d13266a0b3ab3.scope
