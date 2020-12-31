@@ -1,0 +1,6 @@
+MAJOR=259
+MINOR=1
+DEVNAME=nvme0n1p1
+DEVTYPE=partition
+PARTN=1
+PARTNAME=EFI System Partition

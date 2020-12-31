@@ -1,0 +1,9 @@
+NAME="MyDistro"
+VERSION="99.04 (Heroic Hero)"
+ID=distro
+PRETTY_NAME="MyDistro 99.04"
+VERSION_ID="99.04"
+HOME_URL="https://powersj.github.io/whatsthis"
+SUPPORT_URL="https://github.com/powersj/whatsthis"
+BUG_REPORT_URL="https://github.com/powersj/whatsthis"
+VERSION_CODENAME=heroic

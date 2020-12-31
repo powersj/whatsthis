@@ -1,0 +1,1 @@
+HOME=/init=/sbin/initNETWORK_SKIP_ENSLAVED=TERM=linuxBOOT_IMAGE=/boot/vmlinuz-5.8.0-31-genericdrop_caps=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/binPWD=/rootmnt=/root
