@@ -19,13 +19,15 @@ func TestObjectJSONString(t *testing.T) {
 }
 
 func TestSliceContainsString(t *testing.T) {
-	var slice = []string{"foo", "bar"}
+	var slice []string = []string{"foo", "bar"}
+
 	assert.True(t, SliceContainsString(slice, "foo"))
 	assert.False(t, SliceContainsString(slice, "fake"))
 }
 
 func TestSliceContainsInt(t *testing.T) {
-	var slice = []int{42, 2021}
+	var slice []int = []int{42, 2021}
+
 	assert.True(t, SliceContainsInt(slice, 42))
 	assert.False(t, SliceContainsInt(slice, 1))
 }
