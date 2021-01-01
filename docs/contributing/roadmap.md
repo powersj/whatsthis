@@ -4,10 +4,9 @@ This is a collection of future ideas for the project.
 
 ## Next
 
-* Unit testing
 * Examples: include how to use this to query specific subsystems inside a
   go-lang project
-* Documentation: for virt, cloud, container information
+* Greater debug output
 
 ## Next + 1
 
