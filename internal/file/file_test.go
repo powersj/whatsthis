@@ -16,8 +16,8 @@ func TestExists(t *testing.T) {
 func TestListDirs(t *testing.T) {
 	RootDir = "testdata"
 
-	assert.Equal(t, 3, len(ListDirsWithRegex("dir", "^dir*")))
-	assert.Equal(t, make([]string, 0), ListDirsWithRegex("blah", "^dir*"))
+	assert.Equal(t, 3, len(ListDirsWithRegex("dir", `dir\d+`)))
+	assert.Equal(t, make([]string, 0), ListDirsWithRegex("blah", `dir\d+`))
 }
 
 func TestReadString(t *testing.T) {
