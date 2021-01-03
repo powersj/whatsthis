@@ -33,7 +33,7 @@ func TestBlockSize(t *testing.T) {
 	file.RootDir = "testdata"
 	var sys Sys = Sys{}
 
-	assert.Equal(t, int64(999666221056), sys.BlockSize("/sys/class/block/nvme0n1p2"))
+	assert.Equal(t, int64(1952473088), sys.BlockSizeRaw("/sys/class/block/nvme0n1p2"))
 }
 
 func TestBoardName(t *testing.T) {
@@ -50,22 +50,13 @@ func TestBoardVendor(t *testing.T) {
 	assert.Equal(t, "FAKE VENDOR INC.", sys.BoardVendor())
 }
 
-func TestCPUCoreMap(t *testing.T) {
+func TestCPUTopology(t *testing.T) {
 	file.RootDir = "testdata"
 	var sys Sys = Sys{}
 
-	var coreMap map[int][]int = sys.CPUCoreMap()
+	var coreMap map[int][]int = sys.CPUTopology()
 	fmt.Println(coreMap)
 	assert.Equal(t, 0, len(coreMap[2]))
-}
-
-func TestCPUSocketMap(t *testing.T) {
-	file.RootDir = "testdata"
-	var sys Sys = Sys{}
-
-	var socketMap map[string]int = sys.CPUSocketMap()
-	fmt.Println(socketMap)
-	assert.Equal(t, 0, socketMap["1"])
 }
 
 func TestChassisAssetTag(t *testing.T) {
@@ -93,21 +84,21 @@ func TestListBlock(t *testing.T) {
 	file.RootDir = "testdata"
 	var sys Sys = Sys{}
 
-	assert.Equal(t, 3, len(sys.ListBlock()))
+	assert.Equal(t, 3, len(sys.BlockDevices()))
 }
 
 func TestListCPU(t *testing.T) {
 	file.RootDir = "testdata"
 	var sys Sys = Sys{}
 
-	assert.Equal(t, 2, len(sys.ListCPU()))
+	assert.Equal(t, 2, len(sys.CPUs()))
 }
 
 func TestListNetwork(t *testing.T) {
 	file.RootDir = "testdata"
 	var sys Sys = Sys{}
 
-	assert.Equal(t, 2, len(sys.ListNetwork()))
+	assert.Equal(t, 2, len(sys.NetworkAdapters()))
 }
 
 func TestProductName(t *testing.T) {
@@ -125,15 +116,6 @@ func TestProductSerial(t *testing.T) {
 	assert.Equal(t, "", sys.ProductSerial())
 }
 
-func TestRead(t *testing.T) {
-	file.RootDir = "testdata"
-	var sys Sys = Sys{}
-
-	assert.Equal(t, 1500, sys.ReadInt("/sys/class/net/wlp5s0/mtu"))
-	assert.Equal(t, int64(1953525168), sys.ReadInt64("/sys/class/block/nvme0n1/size"))
-	assert.Equal(t, "a4:b1:c1:36:bb:8b", sys.ReadString("/sys/class/net/wlp5s0/address"))
-}
-
 func TestSysVendor(t *testing.T) {
 	file.RootDir = "testdata"
 	var sys Sys = Sys{}
@@ -145,7 +127,7 @@ func TestUEvent(t *testing.T) {
 	file.RootDir = "testdata"
 	var sys Sys = Sys{}
 
-	var ueventMap map[string]string = sys.UEvent("/sys/class/net/wlp5s0")
+	var ueventMap map[string]string = sys.BlockUEvent("/sys/class/net/wlp5s0")
 	assert.Equal(t, "wlan", ueventMap["DEVTYPE"])
 	assert.Equal(t, "wlp5s0", ueventMap["INTERFACE"])
 	assert.Equal(t, "3", ueventMap["IFINDEX"])

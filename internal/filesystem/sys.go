@@ -25,11 +25,22 @@ func (*Sys) BIOSVersion() string {
 	return file.Read("/sys/class/dmi/id/bios_version")
 }
 
-// BlockSize reads from a size file for a storage device. The values return the
-// number of blocks, so the value returned is multiplied by 512 to return the
-// actual size.
-func (s *Sys) BlockSize(target string) int64 {
-	return file.ReadInt64(path.Join(target, "size")) * 512
+// BlockSizeBytes reads from a size file for a storage device. The size file
+// returns the number of blocks, and is always reported assuming 512-byte
+// blocks, so the value returned is multiplied by 512 to return the actual
+// number of bytes (a more useful number)
+func (s *Sys) BlockSizeBytes(target string) int64 {
+	var size int64 = s.BlockSizeRaw(target)
+	if size == -1 {
+		return -1
+	}
+
+	return size * 512
+}
+
+// BlockSizeRaw reads the raw number of 512-byte blocks for a device
+func (s *Sys) BlockSizeRaw(target string) int64 {
+	return file.ReadInt64(path.Join(target, "size"))
 }
 
 // BoardName read from /sys/class/dmi/id/.
@@ -47,11 +58,11 @@ func (*Sys) ChassisAssetTag() string {
 	return file.Read("/sys/class/dmi/id/chassis_asset_tag")
 }
 
-// CPUCoreMap returns a mapping of socket to physical cores.
-func (s *Sys) CPUCoreMap() map[int][]int {
+// CPUTopology returns a mapping of socket to physical cores.
+func (s *Sys) CPUTopology() map[int][]int {
 	var cpuCoreMap map[int][]int = make(map[int][]int)
 
-	for _, cpu := range s.ListCPU() {
+	for _, cpu := range s.CPUs() {
 		var socketID int = file.ReadInt(path.Join(cpu, "topology/physical_package_id"))
 		var coreID int = file.ReadInt(path.Join(cpu, "topology/core_id"))
 
@@ -61,17 +72,6 @@ func (s *Sys) CPUCoreMap() map[int][]int {
 	}
 
 	return cpuCoreMap
-}
-
-// CPUSocketMap returns a map of CPU to Socket.
-func (s *Sys) CPUSocketMap() map[string]int {
-	var cpuSocketMap map[string]int = make(map[string]int)
-
-	for _, cpu := range s.ListCPU() {
-		cpuSocketMap[cpu] = file.ReadInt(path.Join(cpu, "topology/physical_package_id"))
-	}
-
-	return cpuSocketMap
 }
 
 // HypervisorType read from /sys/hypervisor/.
@@ -84,18 +84,18 @@ func (*Sys) HypervisorUUID() string {
 	return file.Read("/sys/hypervisor/uuid")
 }
 
-// ListBlock returns lists all block devices in /sys.
-func (s *Sys) ListBlock() []string {
+// BlockDevices returns lists all block devices in /sys.
+func (s *Sys) BlockDevices() []string {
 	return file.ListDirsWithRegex("/sys/class/block", `.*`)
 }
 
-// ListCPU returns a list of all CPUs in /sys.
-func (s *Sys) ListCPU() []string {
+// CPUs returns a list of all CPUs in /sys.
+func (s *Sys) CPUs() []string {
 	return file.ListDirsWithRegex("/sys/devices/system/cpu", `cpu\d+`)
 }
 
-// ListNetwork returns a list of all network devices in /sys.
-func (s *Sys) ListNetwork() []string {
+// NetworkAdapters returns a list of all network adapters in /sys.
+func (s *Sys) NetworkAdapters() []string {
 	return file.ListDirsWithRegex("/sys/class/net", `.*`)
 }
 
@@ -109,27 +109,17 @@ func (*Sys) ProductSerial() string {
 	return file.Read("/sys/class/dmi/id/product_serial")
 }
 
-// ReadInt returns an int from a file.
-func (*Sys) ReadInt(target string) int {
-	return file.ReadInt(target)
-}
-
-// ReadInt64 returns a in64 from a file.
-func (*Sys) ReadInt64(target string) int64 {
-	return file.ReadInt64(target)
-}
-
-// ReadString returns a string from a file.
-func (*Sys) ReadString(target string) string {
-	return file.Read(target)
-}
-
 // SysVendor read from /sys/class/dmi/id/.
 func (*Sys) SysVendor() string {
 	return file.Read("/sys/class/dmi/id/sys_vendor")
 }
 
-// UEvent reads from the target's uevent file and parses it.
-func (s *Sys) UEvent(target string) map[string]string {
+// NetworkUEvent reads a network adapter's uevent file and parses it.
+func (s *Sys) NetworkUEvent(target string) map[string]string {
+	return file.ParseKeyValue(path.Join(target, "uevent"), "=")
+}
+
+// BlockUEvent reads a block device's uevent file and parses it.
+func (s *Sys) BlockUEvent(target string) map[string]string {
 	return file.ParseKeyValue(path.Join(target, "uevent"), "=")
 }

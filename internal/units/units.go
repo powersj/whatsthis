@@ -20,16 +20,16 @@ var (
 	EB int64 = PB * 1024
 )
 
-// Bits2Human converts bits to human readable version.
-func Bits2Human(rawValue int64) string {
+// Bytes2Human converts bytes to human readable string.
+func Bytes2Human(rawValue int64) string {
 	denominator, unit := nearestUnit(rawValue)
 	var value float64 = float64(rawValue) / float64(denominator)
 	return fmt.Sprintf("%s%s", oneDecimal(value), unit)
 }
 
-// KB2Human converts KBs to human readable version.
+// KB2Human converts kilobytes to human readable string.
 func KB2Human(rawValue int64) string {
-	return Bits2Human(rawValue * KB)
+	return Bytes2Human(rawValue * KB)
 }
 
 // oneDecimal returns the value to one decimal.

@@ -41,10 +41,11 @@ func ListDirsWithRegex(basePath string, regularExpression string) []string {
 	for _, name := range list {
 		matches := rex.FindStringSubmatch(name)
 		if len(matches) > 0 {
-			values = append(values, path.Join(basePath, matches[0]))
+			values = append(values, matches[0])
 		}
 	}
 
+	fmt.Println(values)
 	return values
 }
 

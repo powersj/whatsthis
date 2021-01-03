@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestBits2Human(t *testing.T) {
+func TestBytes2Human(t *testing.T) {
 	tests := []struct {
 		input  int64
 		output string
@@ -24,8 +24,8 @@ func TestBits2Human(t *testing.T) {
 		{1152921504606846976, "1E"},
 	}
 	for _, tc := range tests {
-		t.Run(fmt.Sprintf("bits2human=%d", tc.input), func(t *testing.T) {
-			var output string = Bits2Human(tc.input)
+		t.Run(fmt.Sprintf("bytes2human=%d", tc.input), func(t *testing.T) {
+			var output string = Bytes2Human(tc.input)
 			if output != tc.output {
 				t.Fatalf("got %v; want %v", output, tc.output)
 			}

@@ -73,7 +73,7 @@ func New() (*Probe, error) {
 
 // Probe the system.
 func (p *Probe) probe() error {
-	for _, path := range p.sys.ListNetwork() {
+	for _, path := range p.sys.NetworkAdapters() {
 		if strings.Contains(path, "/sys/class/net/lo") {
 			continue
 		}
@@ -87,7 +87,7 @@ func (p *Probe) probe() error {
 			return errors.Wrap(err, "error determining virtual device")
 		}
 
-		var uevent map[string]string = p.sys.UEvent(path)
+		var uevent map[string]string = p.sys.NetworkUEvent(path)
 		var name string = uevent["INTERFACE"]
 		if name == "" {
 			name = filepath.Base(path)
@@ -97,8 +97,8 @@ func (p *Probe) probe() error {
 		case uevent["DEVTYPE"] == "bridge":
 			var bridge Bridge = Bridge{
 				Name: name,
-				MAC:  p.MAC(path),
-				MTU:  p.MTU(path),
+				MAC:  "TBD",
+				MTU:  -1,
 				Path: path,
 			}
 
@@ -106,8 +106,8 @@ func (p *Probe) probe() error {
 		case virtualDev:
 			var virtual Virtual = Virtual{
 				Name: name,
-				MAC:  p.MAC(path),
-				MTU:  p.MTU(path),
+				MAC:  "TBD",
+				MTU:  -1,
 				Path: path,
 			}
 
@@ -115,9 +115,9 @@ func (p *Probe) probe() error {
 		default:
 			var adapter Adapter = Adapter{
 				Name:   name,
-				MAC:    p.MAC(path),
-				Speed:  p.Speed(path),
-				MTU:    p.MTU(path),
+				MAC:    "TBD",
+				Speed:  -1,
+				MTU:    -1,
 				Driver: p.Driver(path),
 				Path:   path,
 			}
@@ -166,23 +166,8 @@ func (p *Probe) JSON() string {
 
 // Driver returns the device driver.
 func (p *Probe) Driver(target string) string {
-	var uevent map[string]string = p.sys.UEvent(path.Join(target, "device"))
+	var uevent map[string]string = p.sys.NetworkUEvent(path.Join(target, "device"))
 	return uevent["DRIVER"]
-}
-
-// MAC returns the physical MAC address.
-func (p *Probe) MAC(target string) string {
-	return p.sys.ReadString(path.Join(target, "address"))
-}
-
-// MTU returns the device MTU.
-func (p *Probe) MTU(target string) int {
-	return p.sys.ReadInt(path.Join(target, "mtu"))
-}
-
-// Speed returns the speed of the adapter.
-func (p *Probe) Speed(target string) int {
-	return p.sys.ReadInt(path.Join(target, "speed"))
 }
 
 func (p *Probe) isVirtual(target string) (bool, error) {

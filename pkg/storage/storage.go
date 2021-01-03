@@ -50,22 +50,22 @@ func New() (*Probe, error) {
 
 // Probe the system.
 func (p *Probe) probe() error {
-	for _, path := range p.sys.ListBlock() {
+	for _, path := range p.sys.BlockDevices() {
 		if strings.Contains(path, "/sys/class/block/loop") {
 			continue
 		}
 
-		var uevent map[string]string = p.sys.UEvent(path)
+		var uevent map[string]string = p.sys.BlockUEvent(path)
 		if uevent["DEVTYPE"] != "disk" {
 			continue
 		}
 
-		var bytesSize int64 = p.sys.BlockSize(path)
+		var bytes = p.sys.BlockSizeBytes(path)
 		var disk Disk = Disk{
 			Name:       uevent["DEVNAME"],
 			Path:       path,
-			Bytes:      bytesSize,
-			Size:       units.Bits2Human(bytesSize),
+			Bytes:      bytes,
+			Size:       units.Bytes2Human(bytes),
 			Partitions: p.Partitions(uevent["DEVNAME"]),
 		}
 
@@ -105,8 +105,8 @@ func (p *Probe) JSON() string {
 func (p *Probe) Partitions(parentDevName string) []Partition {
 	var partitions []Partition
 
-	for _, path := range p.sys.ListBlock() {
-		var uevent map[string]string = p.sys.UEvent(path)
+	for _, path := range p.sys.BlockDevices() {
+		var uevent map[string]string = p.sys.BlockUEvent(path)
 		if uevent["DEVTYPE"] != "partition" {
 			continue
 		}
@@ -114,14 +114,14 @@ func (p *Probe) Partitions(parentDevName string) []Partition {
 			continue
 		}
 
-		var bytesSize int64 = p.sys.BlockSize(path)
+		var bytesSize int64 = p.sys.BlockSizeBytes(path)
 		var partition Partition = Partition{
 			Name:        uevent["DEVNAME"],
 			Description: uevent["PARTNAME"],
 			Number:      uevent["PARTN"],
 			Path:        path,
 			Bytes:       bytesSize,
-			Size:        units.Bits2Human(bytesSize),
+			Size:        units.Bytes2Human(bytesSize),
 		}
 
 		partitions = append(partitions, partition)

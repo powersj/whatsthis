@@ -44,9 +44,10 @@ func (p *Probe) probe() error {
 		p.Model = "ARMv8"
 	}
 
-	p.NumCores = p.numCores()
-	p.NumThreads = len(p.sys.ListCPU())
-	p.NumSockets = p.numSockets()
+	var topology map[int][]int = p.sys.CPUTopology()
+	p.NumSockets = len(topology)
+	p.NumCores = p.numCores(topology)
+	p.NumThreads = len(p.sys.CPUs())
 
 	return nil
 }
@@ -83,26 +84,11 @@ func (p *Probe) JSON() string {
 	return util.ObjectJSONString(&p)
 }
 
-// numSockets returns the number of sockets in the system.
-func (p *Probe) numSockets() int {
-	var cpuSocketMap map[string]int = p.sys.CPUSocketMap()
-
-	var uniqueSockets []int = make([]int, 0)
-	for _, socketID := range cpuSocketMap {
-		if !util.SliceContainsInt(uniqueSockets, socketID) {
-			uniqueSockets = append(uniqueSockets, socketID)
-		}
-	}
-
-	return len(uniqueSockets)
-}
-
 // numCores returns the number of physical cores in the system.
-func (p *Probe) numCores() int {
-	var cpuCoreMap map[int][]int = p.sys.CPUCoreMap()
-
+func (p *Probe) numCores(topology map[int][]int) int {
 	var numCores int = 0
-	for _, coreIDs := range cpuCoreMap {
+
+	for _, coreIDs := range topology {
 		numCores += len(coreIDs)
 	}
 
