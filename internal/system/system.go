@@ -84,7 +84,7 @@ func Probe() (*System, error) {
 // String representation of the struct.
 func (s *System) String() string {
 	return fmt.Sprintf(
-		"%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
+		"---\n%s\n%s\n%s\n---\n%s\n---\n%s\n%s\n%s\n%s\n%s",
 		s.Cloud.String(),
 		s.Container.String(),
 		s.Virt.String(),
@@ -92,8 +92,8 @@ func (s *System) String() string {
 		s.Platform.String(),
 		s.CPU.String(),
 		s.Memory.String(),
-		s.Storage.String(),
 		s.Network.String(),
+		s.Storage.String(),
 	)
 }
 
