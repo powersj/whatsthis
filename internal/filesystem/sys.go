@@ -90,7 +90,8 @@ func (s *Sys) BlockDevices() []string {
 }
 
 // CPUs returns a list of all CPUs in /sys.
-func (s *Sys) CPUs() []string {
+func (s *Sys) CPUs() []CPU {
+	var CPUs []CPU = make([]CPU, 0)
 	return file.ListDirsWithRegex("/sys/devices/system/cpu", `cpu\d+`)
 }
 

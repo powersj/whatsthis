@@ -21,6 +21,16 @@ type Probe struct {
 	NumSockets int    `json:"numSocket"`
 }
 
+// CPU TODO
+type CPU struct {
+	Core   int `json:"core"`
+	Socket int `json:"socket"`
+	L1d    int `json:"l1d"`
+	L1i    int `json:"l1i"`
+	L2     int `json:"l2"`
+	L3     int `json:"l3"`
+}
+
 // New initializes new probe struct and probes the system.
 func New() (*Probe, error) {
 	proc := filesystem.Proc{}
