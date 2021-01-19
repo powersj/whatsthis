@@ -5,7 +5,7 @@ The project follows [Sematic Versioning](https://semver.org/).
 ## Release a new version
 
 The current under-development release version is kept in
-`pkg/cmd/whatsthis/cmd/root.go`:
+`app/whatsthis/cmd/root.go`:
 
 ```go
 const (
@@ -25,7 +25,7 @@ This will create the corresponding
 [GitHub Releases page](https://github.com/powersj/whatsthis/releases/) and
 upload the artifacts to it.
 
-Then increment the version in `pkg/cmd/whatsthis/cmd/root.go` and push that
+Then increment the version in `app/whatsthis/cmd/root.go` and push that
 change to open the next version:
 
 ```shell

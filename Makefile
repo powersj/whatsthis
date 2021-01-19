@@ -1,7 +1,7 @@
 all: build
 
 build:
-	go build -o whatsthis ./cmd/whatsthis
+	go build -o whatsthis ./app/whatsthis
 
 clean:
 	rm -f whatsthis coverage.out go.sum

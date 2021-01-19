@@ -5,7 +5,7 @@ import (
 	"os"
 	"runtime"
 
-	cmd "github.com/powersj/whatsthis/cmd/whatsthis/cmd"
+	"github.com/powersj/whatsthis/app/whatsthis/cmd"
 )
 
 func main() {

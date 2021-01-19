@@ -24,8 +24,8 @@ cd whatsthis
 make
 ```
 
-The default make command will run `go build -o whatsthis ./cmd/whatsthis` and
-produce a whatsthis binary in the root directory.
+The default make command will run `go build` and produce a whatsthis binary in
+the root directory.
 
 ## From go
 
