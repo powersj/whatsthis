@@ -4,7 +4,7 @@ build:
 	go build -o whatsthis ./app/whatsthis
 
 clean:
-	rm -f whatsthis coverage.out go.sum
+	rm -f whatsthis coverage.out
 	rm -rf dist/ site/
 
 docs:
