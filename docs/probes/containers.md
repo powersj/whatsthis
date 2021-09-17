@@ -9,7 +9,7 @@ on a variety of heuristic.
 
 ### docker
 
-First look for the `/run/.dockerenv` file to identify a Docker container. Then
+First look for the `/.dockerenv` file to identify a Docker container. Then
 look for "docker" inside `/proc/cgroups`.
 
 ### lxc

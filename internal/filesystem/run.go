@@ -12,7 +12,7 @@ func (*Run) ContainerEnv() bool {
 	return file.Exists("/run/.containerenv")
 }
 
-// DockerEnv bool if /run/.dockerenv exists.
+// DockerEnv bool if /.dockerenv exists.
 func (*Run) DockerEnv() bool {
-	return file.Exists("/run/.dockerenv")
+	return file.Exists("/.dockerenv")
 }
