@@ -81,8 +81,10 @@ func ParseKeyValue(file string, delimiter string) map[string]string {
 	}
 
 	for _, line := range strings.Split(output, "\n") {
-		var values []string = strings.Split(line, delimiter)
-		results[values[0]] = strings.TrimSpace(values[1])
+		if strings.Contains(line, delimiter) {
+			var values []string = strings.Split(line, delimiter)
+			results[values[0]] = strings.TrimSpace(values[1])
+		}
 	}
 
 	return results
