@@ -2,9 +2,7 @@ branches:
   only:
   - master
 language: go
-go:
-  - 1.19.x
-  - 1.20.x
+go: 1.19.x
 dist: bionic
 install:
   - go get -t -v ./...
