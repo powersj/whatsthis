@@ -2,7 +2,6 @@ package file
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 	"regexp"
@@ -50,7 +49,7 @@ func ListDirsWithRegex(basePath string, regularExpression string) []string {
 
 // Read a file and return value as string.
 func Read(file string) string {
-	data, err := ioutil.ReadFile(path.Join(RootDir, file))
+	data, err := os.ReadFile(path.Join(RootDir, file))
 	if err != nil {
 		return ""
 	}
